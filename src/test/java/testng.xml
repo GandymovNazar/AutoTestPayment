@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Skywind">
+
+    <test name="Test bet values for all games">
+        <classes>
+            <class name="TestBetValues"/>
+        </classes>
+    </test>
+
+    <test name="Test reels sets for all games">
+        <classes>
+            <class name="TestReelSets"/>
+        </classes>
+    </test>
+
+</suite>
