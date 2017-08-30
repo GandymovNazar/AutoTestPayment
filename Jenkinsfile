@@ -13,7 +13,7 @@ pipeline {
         HOME = "/tmp/"
     }
     stages {
-        stage('NPM install') {
+        stage('Execute tests') {
             steps {
                 sh 'docker pull maven:${MAVEN}'
                 withDockerContainer(image: "maven:${MAVEN}", toolName: 'latest') {
