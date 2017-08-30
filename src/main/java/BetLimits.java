@@ -14,8 +14,8 @@ import java.util.Objects;
 
 class BetLimits {
 
-    private static String loginUrlStage = "https://bo.stg.m27613.com/v1/login";
-    private static String loginUrlProd = "https://bo.gc.skywind-tech.com/v1/login";
+    private static String loginUrlStage = "https://api.stg.m27613.com/v1/login";
+    private static String loginUrlProd = "https://api.gc.skywind-tech.com/v1/login";
     private JSONArray allGamesFromServer = getAllGamesFromServer(Constants.STAGE).getArray();
 
     BetLimits() throws UnirestException {
@@ -87,9 +87,9 @@ class BetLimits {
     JsonNode getAllGamesFromServer(boolean stage) throws UnirestException {
         String gamesUrl;
         if (stage){
-            gamesUrl = "https://bo.stg.m27613.com/v1/games/?limit=100";
+            gamesUrl = "https://api.stg.m27613.com/v1/games/?limit=100";
         } else {
-            gamesUrl = "https://bo.gc.skywind-tech.com/v1/games?limit=100";
+            gamesUrl = "https://api.gc.skywind-tech.com/v1/games?limit=100";
         }
         GetRequest jsonResponse = Unirest.get(gamesUrl).header("x-access-token", getToken(stage));
         HttpResponse<JsonNode> response = jsonResponse.asJson();
