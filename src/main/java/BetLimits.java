@@ -14,7 +14,7 @@ import java.util.Objects;
 
 class BetLimits {
 
-    private static String loginUrlStage = "https://api.stg.m27613.com/v1/login";
+    private static String loginUrlStage = "https://bo.stg.m27613.com/v1/login";
     private static String loginUrlProd = "https://api.gc.skywind-tech.com/v1/login";
     private JSONArray allGamesFromServer = getAllGamesFromServer(Constants.STAGE).getArray();
 
