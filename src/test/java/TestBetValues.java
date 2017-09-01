@@ -10,8 +10,8 @@ import java.util.ArrayList;
 
 public class TestBetValues {
 
-    String[] currencies = {"USD", "EUR", "GBP", "MYR", "CNY", "JPY", "KRW", "IDR", "IDS", "VND", "VNS", "THB"};
-    BetLimits betLimits = new BetLimits();
+    private String[] currencies = {"USD", "EUR", "GBP", "MYR", "CNY", "JPY", "KRW", "IDR", "IDS", "VND", "VNS", "THB"};
+    private BetLimits betLimits = new BetLimits();
 
     public TestBetValues() throws UnirestException {
     }
@@ -19,7 +19,7 @@ public class TestBetValues {
     @DataProvider(name = "notMark4Games")
     public Object[][] notMark4Games() {
         return new Object[][]{{"sw_sgcf"}, {"sw_rs"}, {"sw_qoiaf"}, {"sw_nyf"}, {"sw_sq"}, {"sw_db"}, {"sw_slbs"}, {"sw_888t"}, {"sw_pc"}, {"sw_mer"}, {"sw_tc"}, {"sw_dhcf"}, {"sw_omqjp"}, {"sw_gm"}, {"sw_ycs"}, {"sw_al"}, {"sw_mrmnky"}, {"sw_sod"}, {"sw_gol"},
-                {"sw_dd"}, {"sw_scyd"}, {"sw_dj"}, {"sw_sf"}, {"sw_mf"}, {"sw_rm"}, {"sw_fp"}, {"sw_rf"}};
+                {"sw_dd"}, {"sw_scyd"}, {"sw_dj"}, {"sw_sf"}, {"sw_mf"}, {"sw_rm"}, {"sw_fp"}, {"sw_rf"}, {"sw_hp"}};
     }
 
     @DataProvider(name = "mark4Games")
@@ -30,7 +30,7 @@ public class TestBetValues {
     @DataProvider(name = "allGames")
     public Object[][] allGames() {
         return new Object[][]{{"sw_sgcf"}, {"sw_rs"}, {"sw_qoiaf"}, {"sw_nyf"}, {"sw_sq"}, {"sw_db"}, {"sw_slbs"}, {"sw_888t"}, {"sw_pc"}, {"sw_mer"}, {"sw_tc"}, {"sw_dhcf"}, {"sw_omqjp"}, {"sw_gm"}, {"sw_ycs"}, {"sw_al"}, {"sw_mrmnky"}, {"sw_sod"}, {"sw_gol"},
-                {"sw_dd"}, {"sw_scyd"}, {"sw_dj"}, {"sw_sf"}, {"sw_mf"}, {"sw_rm"}, {"sw_fp"}, {"sw_rf"}, {"sw_fbb"}, {"sw_lodk"}};
+                {"sw_dd"}, {"sw_scyd"}, {"sw_dj"}, {"sw_sf"}, {"sw_mf"}, {"sw_rm"}, {"sw_fp"}, {"sw_rf"}, {"sw_fbb"}, {"sw_lodk"}, {"sw_hp"}};
     }
 
     @BeforeTest

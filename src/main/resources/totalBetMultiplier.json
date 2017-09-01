@@ -27,5 +27,6 @@
   "sw_rf": 25,
   "sw_dj": 15,
   "sw_fbb": 80,
-  "sw_lodk": 50
+  "sw_lodk": 50,
+  "sw_hp": 40
 }
