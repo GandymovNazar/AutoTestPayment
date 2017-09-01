@@ -16,7 +16,7 @@ public class TestReelSets {
 
     @DataProvider(name = "allGames")
     public Object[][] allGames() {
-        return new Object[][]{{"sw_888t"}, {"sw_db"}, {"sw_dhcf"}, {"sw_dj"}, {"sw_rs"}, {"sw_tc"}, {"sw_ycs"}};
+        return new Object[][]{{"sw_888t"}, {"sw_db"}, {"sw_dhcf"}, {"sw_dj"}, {"sw_rs"}, {"sw_tc"}, {"sw_ycs"}, {"sw_scyd"}};
     }
 
 
@@ -29,7 +29,7 @@ public class TestReelSets {
         List<File> lst = Arrays.asList(sets);
 
         ReelSets reelSets = new ReelSets();
-        for (File file : lst){
+        for (File file : lst) {
             String setName = file.getName();
             System.out.println("Checking reels set: " + setName);
             ArrayList<ArrayList<Integer>> reelsFromFile = reelSets.getReelsFromFile(gameName, setName);
@@ -40,7 +40,7 @@ public class TestReelSets {
                 JSONArray reel = reelsFromServerJSONArray.getJSONArray(i);
                 ArrayList<Integer> reelFromFile = reelsFromFile.get(i);
                 ArrayList<Integer> reelFromServer = new ArrayList<>();
-                for (int j = 0; j < reel.length(); j++){
+                for (int j = 0; j < reel.length(); j++) {
                     reelFromServer.add((Integer) reel.get(j));
                 }
                 Assert.assertEquals(reelFromServer, reelFromFile);
