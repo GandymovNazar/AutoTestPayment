@@ -17,7 +17,7 @@ public class TestReelSets {
     @DataProvider(name = "allGames")
     public Object[][] allGames() {
         return new Object[][]{{"sw_888t"}, {"sw_db"}, {"sw_dhcf"}, {"sw_dj"}, {"sw_rs"}, {"sw_tc"}, {"sw_ycs"}, {"sw_scyd"}, {"sw_sf"}, {"sw_sq"},
-                {"sw_rf"}, {"sw_qoiaf"}};
+                {"sw_rf"}, {"sw_qoiaf"}, {"sw_nyf"}, {"sw_mer"}, {"sw_lodk"}, {"sw_gm"}};
     }
 
 
