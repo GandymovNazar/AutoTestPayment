@@ -16,26 +16,35 @@ class BetLimits {
 
     private static String loginUrlStage = "https://api.stg.m27613.com/v1/login";
     private static String loginUrlProd = "https://api.m27613.com/v1/login";
-    private JSONArray allGamesFromServer = getAllGamesFromServer(Constants.STAGE).getArray();
+    private static String loginUrlCD2 = "http://api.cd2.d.skywind-tech.com/v1/login";
+    private JSONArray allGamesFromServer = getAllGamesFromServer(Constants.ENVIRONMENT).getArray();
 
     BetLimits() throws UnirestException {
     }
 
-    static String getToken(boolean stage) {
+
+    private static String getToken(String environment) {
         HttpResponse<JsonNode> jsonResponse = null;
         try {
-            if (stage) {
-                jsonResponse = Unirest.post(loginUrlStage)
-                        .field("secretKey", "a6fcffac-4270-47a9-a821-299a883bd8be")
-                        .field("username", "swftest2_USER")
-                        .field("password", "123456qaB")
-                        .asJson();
-            } else {
+            switch (environment) {
+                case "stage":
+                    jsonResponse = Unirest.post(loginUrlStage)
+                            .field("secretKey", "a6fcffac-4270-47a9-a821-299a883bd8be")
+                            .field("username", "swftest2_USER")
+                            .field("password", "123456qaB")
+                            .asJson();
+                case "production":
                 jsonResponse = Unirest.post(loginUrlProd)
                         .field("secretKey", "MASTER_KEY-swftest_ENTITY-swftest_BRAND")
                         .field("username", "swftest_USER")
                         .field("password", "swftest_QaZ321")
                         .asJson();
+                case "cd2":
+                    jsonResponse = Unirest.post(loginUrlCD2)
+                            .field("secretKey", "MASTER_KEY-swftest_ENTITY-swftest_BRAND")
+                            .field("username", "swftest_USER")
+                            .field("password", "swftest_QaZ321!")
+                            .asJson();
             }
         } catch (UnirestException e) {
             e.printStackTrace();
@@ -64,9 +73,9 @@ class BetLimits {
         String limitsJson = new String(Files.readAllBytes(Paths.get(Constants.resources + "/limits/" + gameName + "_limits.json")));
         JsonNode allLimits = new JsonNode(limitsJson);
         ArrayList<Double> listdata = new ArrayList<>();
-        JSONArray jArray = (JSONArray)allLimits.getObject().get(currency);
+        JSONArray jArray = (JSONArray) allLimits.getObject().get(currency);
         if (jArray != null) {
-            for (int i=0; i<jArray.length(); i++){
+            for (int i = 0; i < jArray.length(); i++) {
                 listdata.add(jArray.getDouble(i));
             }
         }
@@ -74,31 +83,38 @@ class BetLimits {
     }
 
     JSONObject getLimitsFromServer(String gameName, String currency) throws UnirestException {
-        for(int i = 0; i < allGamesFromServer.length(); i++){
-            if (Objects.equals(allGamesFromServer.getJSONObject(i).get("code"), gameName)){
+        for (int i = 0; i < allGamesFromServer.length(); i++) {
+            if (Objects.equals(allGamesFromServer.getJSONObject(i).get("code"), gameName)) {
                 JSONObject limits = (JSONObject) allGamesFromServer.getJSONObject(i).get("limits");
                 return (JSONObject) limits.get(currency);
             }
 
         }
+        System.out.println("Game not found");
         return null;
     }
 
-    JsonNode getAllGamesFromServer(boolean stage) throws UnirestException {
-        String gamesUrl;
-        if (stage){
-            gamesUrl = "https://api.stg.m27613.com/v1/games/?limit=100";
-        } else {
-            gamesUrl = "https://api.m27613.com/v1/games?limit=100";
+    private JsonNode getAllGamesFromServer(String environment) throws UnirestException {
+        String gamesUrl = "";
+        switch (environment) {
+            case "stage":
+                gamesUrl = "https://api.stg.m27613.com/v1/games/?limit=1000";
+                break;
+            case "production":
+                gamesUrl = "https://api.m27613.com/v1/games/?limit=1000";
+                break;
+            case "cd2":
+                gamesUrl = "http://api.cd2.d.skywind-tech.com/v1/games/?limit=1000";
+                break;
         }
-        GetRequest jsonResponse = Unirest.get(gamesUrl).header("x-access-token", getToken(stage));
+        GetRequest jsonResponse = Unirest.get(gamesUrl).header("x-access-token", getToken(environment));
         HttpResponse<JsonNode> response = jsonResponse.asJson();
         return response.getBody();
     }
 
     double getDefaultBetFromServer(String gameName, String currency) throws UnirestException {
-        for(int i = 0; i < allGamesFromServer.length(); i++){
-            if (Objects.equals(allGamesFromServer.getJSONObject(i).get("code"), gameName)){
+        for (int i = 0; i < allGamesFromServer.length(); i++) {
+            if (Objects.equals(allGamesFromServer.getJSONObject(i).get("code"), gameName)) {
                 JSONObject limits = (JSONObject) allGamesFromServer.getJSONObject(i).get("limits");
                 JSONObject currencyLimits = (JSONObject) limits.get(currency);
                 return Double.parseDouble(currencyLimits.get("stakeDef").toString());
@@ -115,8 +131,8 @@ class BetLimits {
     }
 
     double getMinBet(String gameName, String currency) throws UnirestException {
-        for(int i = 0; i < allGamesFromServer.length(); i++){
-            if (Objects.equals(allGamesFromServer.getJSONObject(i).get("code"), gameName)){
+        for (int i = 0; i < allGamesFromServer.length(); i++) {
+            if (Objects.equals(allGamesFromServer.getJSONObject(i).get("code"), gameName)) {
                 JSONObject limits = (JSONObject) allGamesFromServer.getJSONObject(i).get("limits");
                 JSONObject currencyLimits = (JSONObject) limits.get(currency);
                 return Double.parseDouble(currencyLimits.get("stakeMin").toString());
@@ -126,8 +142,8 @@ class BetLimits {
     }
 
     double getMaxBet(String gameName, String currency) throws UnirestException {
-        for(int i = 0; i < allGamesFromServer.length(); i++){
-            if (Objects.equals(allGamesFromServer.getJSONObject(i).get("code"), gameName)){
+        for (int i = 0; i < allGamesFromServer.length(); i++) {
+            if (Objects.equals(allGamesFromServer.getJSONObject(i).get("code"), gameName)) {
                 JSONObject limits = (JSONObject) allGamesFromServer.getJSONObject(i).get("limits");
                 JSONObject currencyLimits = (JSONObject) limits.get(currency);
                 return Double.parseDouble(currencyLimits.get("stakeMax").toString());
@@ -136,9 +152,9 @@ class BetLimits {
         return -1;
     }
 
-    long getMaxTotalBetFromServer(String game, String currency){
-        for(int i = 0; i < allGamesFromServer.length(); i++){
-            if (Objects.equals(allGamesFromServer.getJSONObject(i).get("code"), game)){
+    long getMaxTotalBetFromServer(String game, String currency) {
+        for (int i = 0; i < allGamesFromServer.length(); i++) {
+            if (Objects.equals(allGamesFromServer.getJSONObject(i).get("code"), game)) {
                 JSONObject limits = (JSONObject) allGamesFromServer.getJSONObject(i).get("limits");
                 JSONObject currencyLimits = (JSONObject) limits.get(currency);
                 return Long.parseLong(currencyLimits.get("maxTotalStake").toString());

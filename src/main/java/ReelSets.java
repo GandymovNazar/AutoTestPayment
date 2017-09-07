@@ -10,17 +10,30 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class ReelSets {
+class ReelSets {
 
 
 //    private boolean STAGE = false;
     private String urlStage = "https://gs2.stg.m27613.com/casino/game2";
     private String urlProd = "https://gs3.m27613.com/casino/game2";
+    private String urlCd2 = "http://api.cd2.d.skywind-tech.com:4001/casino/game2";
 
     private JSONObject getGameInfo(String game) throws IOException {
         HttpResponse<JsonNode> jsonResponse = null;
+        String url = null;
+        switch (Constants.ENVIRONMENT){
+            case "stage":
+                url = urlStage;
+                break;
+            case "production":
+                url = urlProd;
+                break;
+            case "cd2":
+                url = urlCd2;
+                break;
+        }
         try {
-            jsonResponse = Unirest.post(Constants.STAGE ? urlStage : urlProd)
+            jsonResponse = Unirest.post(url)
                     .header("Content-Type", "application/json")
                     .body("{\n" +
                             "  \"deviceId\": \"web\",\n" +

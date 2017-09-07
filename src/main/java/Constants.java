@@ -2,10 +2,10 @@ import java.io.File;
 import java.nio.file.Path;
 import java.util.Objects;
 
-public final class Constants {
+final class Constants {
 
 
-    public static final boolean STAGE = Boolean.parseBoolean(System.getProperty("stage"));
+    static final String ENVIRONMENT = System.getProperty("env");
 
-    public static final String resources = new File("src/main/resources").toString();
+    static final String resources = new File("src/main/resources").toString();
 }

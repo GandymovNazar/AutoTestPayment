@@ -35,7 +35,7 @@ public class TestBetValues {
 
     @BeforeTest
     public void printDetails() {
-        System.out.println(Constants.STAGE ? "Checking games on stage" : "Checking games on production");
+        System.out.println("Checking games on " + Constants.ENVIRONMENT);
     }
 
     @Test(dataProvider = "notMark4Games")
