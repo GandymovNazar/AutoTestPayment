@@ -43,7 +43,8 @@ public class TestBetValues {
         System.out.println("\nWin capping for game " + game);
         for (String currency : currencies) {
             System.out.println("Checking win capping for " + currency);
-            Assert.assertEquals(Long.parseLong(betLimits.getLimitsFromServer(game, currency).get("winMax").toString()), betLimits.getWincappingFromFile(currency, false));
+            Assert.assertEquals(Long.parseLong(betLimits.getLimitsFromServer(game, currency).get("winMax").toString()), betLimits.getWincappingFromFile(currency, false),
+                    "Incorrect win capping value in the game " + game + ". Currency: " + currency);
         }
     }
 
@@ -52,7 +53,8 @@ public class TestBetValues {
         System.out.println("\nWin capping for game " + game);
         for (String currency : currencies) {
             System.out.println("Checking win capping for " + currency);
-            Assert.assertEquals(Long.parseLong(betLimits.getLimitsFromServer(game, currency).get("winMax").toString()), betLimits.getWincappingFromFile(currency, true));
+            Assert.assertEquals(Long.parseLong(betLimits.getLimitsFromServer(game, currency).get("winMax").toString()), betLimits.getWincappingFromFile(currency, true),
+                    "Incorrect win capping value in the game " + game + ". Currency: " + currency);
         }
     }
 
@@ -66,7 +68,8 @@ public class TestBetValues {
             for (Object limit : limits) {
                 limitDouble.add(new Double(limit.toString()));
             }
-            Assert.assertEquals(limitDouble, betLimits.getLimitsFromFile(game, currency));
+                Assert.assertEquals(limitDouble, betLimits.getLimitsFromFile(game, currency),
+                        "Error in the bet values. Game: " + game + ". Currency: " + currency);
         }
     }
 
@@ -76,7 +79,8 @@ public class TestBetValues {
         System.out.println("\nChecking default bet for game: " + game);
         for (String currency : currencies) {
             System.out.println("Checking default bet value for " + currency);
-            Assert.assertEquals(betLimits.getDefaultBetFromServer(game, currency), betLimits.getLimitsFromFile(game, currency).get(betLimits.getDefaultBetElement(game)));
+            Assert.assertEquals(betLimits.getDefaultBetFromServer(game, currency), betLimits.getLimitsFromFile(game, currency).get(betLimits.getDefaultBetElement(game)),
+                    "Incorrect default bet in the game " + game + ". Currency: " + currency);
         }
     }
 
@@ -85,7 +89,8 @@ public class TestBetValues {
         System.out.println("\nChecking min bet for game: " + game);
         for (String currency : currencies) {
             System.out.println("Checking min bet value for " + currency);
-            Assert.assertEquals(betLimits.getMinBet(game, currency), betLimits.getLimitsFromFile(game, currency).get(0));
+            Assert.assertEquals(betLimits.getMinBet(game, currency), betLimits.getLimitsFromFile(game, currency).get(0),
+                    "Incorrect min bet in the game " + game + ". Currency: " + currency);
         }
     }
 
@@ -95,7 +100,8 @@ public class TestBetValues {
         for (String currency : currencies) {
             System.out.println("Checking max bet value for " + currency);
             ArrayList<Double> limitsFromFile = betLimits.getLimitsFromFile(game, currency);
-            Assert.assertEquals(betLimits.getMaxBet(game, currency), limitsFromFile.get(limitsFromFile.size() - 1));
+            Assert.assertEquals(betLimits.getMaxBet(game, currency), limitsFromFile.get(limitsFromFile.size() - 1),
+                    "Incorrect max bet in the game " + game + ". Currency: " + currency);
         }
     }
 
@@ -105,7 +111,8 @@ public class TestBetValues {
         for (String currency : currencies) {
             System.out.println("Checking max total bet value for " + currency);
             ArrayList<Double> limitsFromFile = betLimits.getLimitsFromFile(game, currency);
-            Assert.assertEquals(betLimits.getMaxTotalBetFromServer(game, currency), (long) (limitsFromFile.get(limitsFromFile.size() - 1) * betLimits.getMaxTotalStakeFromFile(game)));
+            Assert.assertEquals(betLimits.getMaxTotalBetFromServer(game, currency), (long) (limitsFromFile.get(limitsFromFile.size() - 1) * betLimits.getMaxTotalStakeFromFile(game)),
+                    "Incorrect max total bet in the game " + game + ". Currency: " + currency);
         }
     }
 

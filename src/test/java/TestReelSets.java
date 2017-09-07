@@ -44,7 +44,8 @@ public class TestReelSets {
                 for (int j = 0; j < reel.length(); j++) {
                     reelFromServer.add((Integer) reel.get(j));
                 }
-                Assert.assertEquals(reelFromServer, reelFromFile);
+                Assert.assertEquals(reelFromServer, reelFromFile,
+                        "Incorrect reel set " + setName);
                 reelFromServer.clear();
             }
         }
