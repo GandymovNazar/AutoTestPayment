@@ -18,7 +18,7 @@ class ReelSets {
     private String urlProd = "https://gs3.m27613.com/casino/game2";
     private String urlCd2 = "http://api.cd2.d.skywind-tech.com:4001/casino/game2";
 
-    private JSONObject getGameInfo(String game) throws IOException {
+    private JSONObject getGameInfoFromServer(String game) throws IOException {
         HttpResponse<JsonNode> jsonResponse = null;
         String url = null;
         switch (Constants.ENVIRONMENT){
@@ -55,8 +55,8 @@ class ReelSets {
         return (JSONObject) jsonResponse.getBody().getObject().get("result");
     }
 
-    JSONObject getReels(String game) throws IOException {
-        JSONObject slot = (JSONObject) getGameInfo(game).get("slot");
+    JSONObject getReelsFromServer(String game) throws IOException {
+        JSONObject slot = (JSONObject) getGameInfoFromServer(game).get("slot");
         return (JSONObject) slot.get("sets");
     }
 

@@ -2,7 +2,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
-import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import java.io.File;
@@ -10,7 +9,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 public class TestReelSets {
 
@@ -33,7 +31,7 @@ public class TestReelSets {
             String setName = file.getName();
             System.out.println("Checking reels set: " + setName);
             ArrayList<ArrayList<Integer>> reelsFromFile = reelSets.getReelsFromFile(gameName, setName);
-            JSONObject reelsFromServer = (JSONObject) reelSets.getReels(gameName).get(setName.replace(".csv", ""));
+            JSONObject reelsFromServer = (JSONObject) reelSets.getReelsFromServer(gameName).get(setName.replace(".csv", ""));
             JSONArray reelsFromServerJSONArray = reelsFromServer.getJSONArray("reels");
 
             for (int i = 0; i < reelsFromServerJSONArray.length(); i++) {
