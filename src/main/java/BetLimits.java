@@ -33,18 +33,21 @@ class BetLimits {
                             .field("username", "swftest2_USER")
                             .field("password", "123456qaB")
                             .asJson();
+                    break;
                 case "production":
-                jsonResponse = Unirest.post(loginUrlProd)
-                        .field("secretKey", "MASTER_KEY-swftest_ENTITY-swftest_BRAND")
-                        .field("username", "swftest_USER")
-                        .field("password", "swftest_QaZ321")
-                        .asJson();
+                    jsonResponse = Unirest.post(loginUrlProd)
+                            .field("secretKey", "MASTER_KEY-swftest_ENTITY-swftest_BRAND")
+                            .field("username", "swftest_USER")
+                            .field("password", "swftest_QaZ321")
+                            .asJson();
+                    break;
                 case "cd2":
                     jsonResponse = Unirest.post(loginUrlCD2)
                             .field("secretKey", "MASTER_KEY-swftest_ENTITY-swftest_BRAND")
                             .field("username", "swftest_USER")
                             .field("password", "swftest_QaZ321!")
                             .asJson();
+                    break;
             }
         } catch (UnirestException e) {
             e.printStackTrace();
