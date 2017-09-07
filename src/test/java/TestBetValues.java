@@ -1,6 +1,7 @@
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.json.JSONArray;
 import org.testng.Assert;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -19,7 +20,7 @@ public class TestBetValues {
     @DataProvider(name = "notMark4Games")
     public Object[][] notMark4Games() {
         return new Object[][]{{"sw_sgcf"}, {"sw_rs"}, {"sw_qoiaf"}, {"sw_nyf"}, {"sw_sq"}, {"sw_db"}, {"sw_slbs"}, {"sw_888t"}, {"sw_pc"}, {"sw_mer"}, {"sw_tc"}, {"sw_dhcf"}, {"sw_omqjp"}, {"sw_gm"}, {"sw_ycs"}, {"sw_al"}, {"sw_mrmnky"}, {"sw_sod"}, {"sw_gol"},
-                {"sw_dd"}, {"sw_scyd"}, {"sw_dj"}, {"sw_sf"}, {"sw_mf"}, {"sw_rm"}, {"sw_fp"}, {"sw_rf"}, {"sw_hp"}};
+                {"sw_dd"}, {"sw_scyd"}, {"sw_dj"}, {"sw_sf"}, {"sw_mf"}, {"sw_rm"}, {"sw_fp"}, {"sw_rf"}, {"sw_hp"}, {"sw_h2h"}};
     }
 
     @DataProvider(name = "mark4Games")
@@ -30,7 +31,7 @@ public class TestBetValues {
     @DataProvider(name = "allGames")
     public Object[][] allGames() {
         return new Object[][]{{"sw_sgcf"}, {"sw_rs"}, {"sw_qoiaf"}, {"sw_nyf"}, {"sw_sq"}, {"sw_db"}, {"sw_slbs"}, {"sw_888t"}, {"sw_pc"}, {"sw_mer"}, {"sw_tc"}, {"sw_dhcf"}, {"sw_omqjp"}, {"sw_gm"}, {"sw_ycs"}, {"sw_al"}, {"sw_mrmnky"}, {"sw_sod"}, {"sw_gol"},
-                {"sw_dd"}, {"sw_scyd"}, {"sw_dj"}, {"sw_sf"}, {"sw_mf"}, {"sw_rm"}, {"sw_fp"}, {"sw_rf"}, {"sw_fbb"}, {"sw_lodk"}, {"sw_hp"}};
+                {"sw_dd"}, {"sw_scyd"}, {"sw_dj"}, {"sw_sf"}, {"sw_mf"}, {"sw_rm"}, {"sw_fp"}, {"sw_rf"}, {"sw_fbb"}, {"sw_lodk"}, {"sw_hp"}, {"sw_h2h"}};
     }
 
     @BeforeTest
@@ -44,7 +45,7 @@ public class TestBetValues {
         for (String currency : currencies) {
             System.out.println("Checking win capping for " + currency);
             Assert.assertEquals(Long.parseLong(betLimits.getLimitsFromServer(game, currency).get("winMax").toString()), betLimits.getWincappingFromFile(currency, false),
-                    "Incorrect win capping value in the game " + game + ". Currency: " + currency);
+                    "Incorrect win capping value in the game " + game + ". Currency: " + currency + ".");
         }
     }
 
@@ -54,7 +55,7 @@ public class TestBetValues {
         for (String currency : currencies) {
             System.out.println("Checking win capping for " + currency);
             Assert.assertEquals(Long.parseLong(betLimits.getLimitsFromServer(game, currency).get("winMax").toString()), betLimits.getWincappingFromFile(currency, true),
-                    "Incorrect win capping value in the game " + game + ". Currency: " + currency);
+                    "Incorrect win capping value in the game " + game + ". Currency: " + currency + ".");
         }
     }
 
@@ -69,7 +70,7 @@ public class TestBetValues {
                 limitDouble.add(new Double(limit.toString()));
             }
                 Assert.assertEquals(limitDouble, betLimits.getLimitsFromFile(game, currency),
-                        "Error in the bet values. Game: " + game + ". Currency: " + currency);
+                        "Error in the bet values. Game: " + game + ". Currency: " + currency + ".");
         }
     }
 
@@ -80,7 +81,7 @@ public class TestBetValues {
         for (String currency : currencies) {
             System.out.println("Checking default bet value for " + currency);
             Assert.assertEquals(betLimits.getDefaultBetFromServer(game, currency), betLimits.getLimitsFromFile(game, currency).get(betLimits.getDefaultBetElement(game)),
-                    "Incorrect default bet in the game " + game + ". Currency: " + currency);
+                    "Incorrect default bet in the game " + game + ". Currency: " + currency + ".");
         }
     }
 
@@ -90,7 +91,7 @@ public class TestBetValues {
         for (String currency : currencies) {
             System.out.println("Checking min bet value for " + currency);
             Assert.assertEquals(betLimits.getMinBet(game, currency), betLimits.getLimitsFromFile(game, currency).get(0),
-                    "Incorrect min bet in the game " + game + ". Currency: " + currency);
+                    "Incorrect min bet in the game " + game + ". Currency: " + currency + ".");
         }
     }
 
@@ -101,7 +102,7 @@ public class TestBetValues {
             System.out.println("Checking max bet value for " + currency);
             ArrayList<Double> limitsFromFile = betLimits.getLimitsFromFile(game, currency);
             Assert.assertEquals(betLimits.getMaxBet(game, currency), limitsFromFile.get(limitsFromFile.size() - 1),
-                    "Incorrect max bet in the game " + game + ". Currency: " + currency);
+                    "Incorrect max bet in the game " + game + ". Currency: " + currency + ".");
         }
     }
 
@@ -112,8 +113,13 @@ public class TestBetValues {
             System.out.println("Checking max total bet value for " + currency);
             ArrayList<Double> limitsFromFile = betLimits.getLimitsFromFile(game, currency);
             Assert.assertEquals(betLimits.getMaxTotalBetFromServer(game, currency), (long) (limitsFromFile.get(limitsFromFile.size() - 1) * betLimits.getMaxTotalStakeFromFile(game)),
-                    "Incorrect max total bet in the game " + game + ". Currency: " + currency);
+                    "Incorrect max total bet in the game " + game + ". Currency: " + currency + ".");
         }
+    }
+
+    @AfterSuite
+    public void printDetailsAfter(){
+        System.out.println("Tests have been made on " + Constants.ENVIRONMENT + ".");
     }
 
 }
