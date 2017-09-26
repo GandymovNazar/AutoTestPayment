@@ -70,12 +70,14 @@ class ReelSets {
         ArrayList<Integer> reel2 = new ArrayList<>();
         ArrayList<Integer> reel3 = new ArrayList<>();
         ArrayList<Integer> reel4 = new ArrayList<>();
+        ArrayList<Integer> reel5 = new ArrayList<>();
         ArrayList<ArrayList<Integer>> reels = new ArrayList<>();
         reels.add(reel0);
         reels.add(reel1);
         reels.add(reel2);
         reels.add(reel3);
         reels.add(reel4);
+        reels.add(reel5);
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             while ((line = br.readLine()) != null) {
                 String[] row = line.split(cvsSplitBy);
