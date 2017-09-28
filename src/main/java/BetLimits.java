@@ -4,6 +4,7 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.mashape.unirest.request.GetRequest;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -11,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Set;
 
 class BetLimits {
 
@@ -133,7 +135,7 @@ class BetLimits {
         return Integer.parseInt(default_bet_elements.getObject().get(game).toString());
     }
 
-    double getMinBet(String gameName, String currency) throws UnirestException {
+    double getMinBetFromServer(String gameName, String currency) throws UnirestException {
         for (int i = 0; i < allGamesFromServer.length(); i++) {
             if (Objects.equals(allGamesFromServer.getJSONObject(i).get("code"), gameName)) {
                 JSONObject limits = (JSONObject) allGamesFromServer.getJSONObject(i).get("limits");
@@ -144,7 +146,7 @@ class BetLimits {
         return -1;
     }
 
-    double getMaxBet(String gameName, String currency) throws UnirestException {
+    double getMaxBetFromServer(String gameName, String currency) throws UnirestException {
         for (int i = 0; i < allGamesFromServer.length(); i++) {
             if (Objects.equals(allGamesFromServer.getJSONObject(i).get("code"), gameName)) {
                 JSONObject limits = (JSONObject) allGamesFromServer.getJSONObject(i).get("limits");
@@ -170,5 +172,61 @@ class BetLimits {
         String file = new String(Files.readAllBytes(Paths.get(Constants.resources + "/totalBetMultiplier.json")));
         JsonNode totalBetMultiplier = new JsonNode(file);
         return Long.parseLong(totalBetMultiplier.getObject().get(game).toString());
+    }
+
+    private JSONObject getCurrencySettingsFromFile(String game, String currency) throws IOException {
+        String file = new String(Files.readAllBytes(Paths.get(Constants.resources + "/curr_groups/" + game + ".json")));
+        JsonNode curr_groups = new JsonNode(file);
+        return (JSONObject) curr_groups.getObject().get(currency);
+    }
+
+    double getDefaultBetFromFile(String game, String currency) throws IOException {
+        JSONObject currencySettings = getCurrencySettingsFromFile(game, currency);
+        return Double.parseDouble(currencySettings.get("stakeDef").toString());
+    }
+
+    double getMaxBetFromFile(String game, String currency) throws IOException {
+        JSONObject currencySettings = getCurrencySettingsFromFile(game, currency);
+        return Double.parseDouble(currencySettings.get("stakeMax").toString());
+    }
+
+    long getMaxTotalBetFromFile(String game, String currency) throws IOException {
+        JSONObject currencySettings = getCurrencySettingsFromFile(game, currency);
+        return Long.parseLong(currencySettings.get("maxTotalStake").toString());
+    }
+
+    double getMinBetFromFile(String game, String currency) throws IOException {
+        JSONObject currencySettings = getCurrencySettingsFromFile(game, currency);
+        return Double.parseDouble(currencySettings.get("stakeMin").toString());
+    }
+
+    long getMaxWinFromFile(String game, String currency) throws IOException {
+        JSONObject currencySettings = getCurrencySettingsFromFile(game, currency);
+        return Long.parseLong(currencySettings.get("winMax").toString());
+    }
+
+    JSONArray getBetListFromFile(String game, String currency) throws IOException {
+        JSONObject currencySettings = getCurrencySettingsFromFile(game, currency);
+        return (JSONArray) currencySettings.get("stakeAll");
+    }
+
+    Set<String> getAllCurrencies(String game) throws IOException {
+        String file = new String(Files.readAllBytes(Paths.get(Constants.resources + "/curr_groups/" + game + ".json")));
+        JSONObject curr_groups = new JsonNode(file).getObject();
+        return curr_groups.keySet();
+    }
+
+    boolean isCurrencyPresentForGameInServer(String game, String currency){
+        for (int i = 0; i < allGamesFromServer.length(); i++) {
+            if (Objects.equals(allGamesFromServer.getJSONObject(i).get("code"), game)) {
+                JSONObject limits = (JSONObject) allGamesFromServer.getJSONObject(i).get("limits");
+                try {
+                    limits.get(currency);
+                } catch (JSONException e){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }

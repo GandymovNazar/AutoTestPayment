@@ -5,7 +5,7 @@
 
     <test name="Test bet values for all games">
         <classes>
-            <class name="TestBetValues"/>
+            <class name="TestLimits"/>
         </classes>
     </test>
 

@@ -8,18 +8,20 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Set;
 
 public class TestBetValues {
 
-    private String[] currencies = {"USD", "EUR", "GBP", "MYR", "CNY", "JPY", "KRW", "IDR", "IDS", "VND", "VNS", "THB"};
     private BetLimits betLimits = new BetLimits();
+        private String[] currencies = {"USD", "EUR", "GBP", "MYR", "CNY", "JPY", "KRW", "IDR", "IDS", "VND", "VNS", "THB"};
 
-    public TestBetValues() throws UnirestException {
+
+    public TestBetValues() throws UnirestException, IOException {
     }
 
     @DataProvider(name = "notMark4Games")
     public Object[][] notMark4Games() {
-        return new Object[][]{{"sw_sgcf"}, {"sw_rs"}, {"sw_qoiaf"}, {"sw_nyf"}, {"sw_sq"}, {"sw_db"}, {"sw_slbs"}, {"sw_888t"}, {"sw_pc"}, {"sw_mer"}, {"sw_tc"}, {"sw_dhcf"}, {"sw_omqjp"}, {"sw_gm"}, {"sw_ycs"}, {"sw_al"}, {"sw_mrmnky"}, {"sw_sod"}, {"sw_gol"},
+        return new Object[][]{{"sw_sgcf"}, {"sw_rs"}, {"sw_qoiaf"}, {"sw_nyf"}, {"sw_sq"}, {"sw_db"}, {"sw_slbs"}, {"sw_888t.json"}, {"sw_pc"}, {"sw_mer"}, {"sw_tc"}, {"sw_dhcf"}, {"sw_omqjp"}, {"sw_gm"}, {"sw_ycs"}, {"sw_al"}, {"sw_mrmnky"}, {"sw_sod"}, {"sw_gol"},
                 {"sw_dd"}, {"sw_scyd"}, {"sw_dj"}, {"sw_sf"}, {"sw_mf"}, {"sw_rm"}, {"sw_fp"}, {"sw_rf"}, {"sw_hp"}, {"sw_h2h"}, {"sw_ld"}, {"sw_ggdn"}, {"sw_9s1k"}};
     }
 
@@ -30,7 +32,7 @@ public class TestBetValues {
 
     @DataProvider(name = "allGames")
     public Object[][] allGames() {
-        return new Object[][]{{"sw_sgcf"}, {"sw_rs"}, {"sw_qoiaf"}, {"sw_nyf"}, {"sw_sq"}, {"sw_db"}, {"sw_slbs"}, {"sw_888t"}, {"sw_pc"}, {"sw_mer"}, {"sw_tc"}, {"sw_dhcf"}, {"sw_omqjp"}, {"sw_gm"}, {"sw_ycs"}, {"sw_al"}, {"sw_mrmnky"}, {"sw_sod"}, {"sw_gol"},
+        return new Object[][]{{"sw_sgcf"}, {"sw_rs"}, {"sw_qoiaf"}, {"sw_nyf"}, {"sw_sq"}, {"sw_db"}, {"sw_slbs"}, {"sw_888t.json"}, {"sw_pc"}, {"sw_mer"}, {"sw_tc"}, {"sw_dhcf"}, {"sw_omqjp"}, {"sw_gm"}, {"sw_ycs"}, {"sw_al"}, {"sw_mrmnky"}, {"sw_sod"}, {"sw_gol"},
                 {"sw_dd"}, {"sw_scyd"}, {"sw_dj"}, {"sw_sf"}, {"sw_mf"}, {"sw_rm"}, {"sw_fp"}, {"sw_rf"}, {"sw_fbb"}, {"sw_lodk"}, {"sw_hp"}, {"sw_h2h"}, {"sw_ld"}, {"sw_ggdn"}, {"sw_9s1k"}};
     }
 
@@ -90,7 +92,7 @@ public class TestBetValues {
         System.out.println("\nChecking min bet for game: " + game);
         for (String currency : currencies) {
             System.out.println("Checking min bet value for " + currency);
-            Assert.assertEquals(betLimits.getMinBet(game, currency), betLimits.getLimitsFromFile(game, currency).get(0),
+            Assert.assertEquals(betLimits.getMinBetFromServer(game, currency), betLimits.getLimitsFromFile(game, currency).get(0),
                     "Incorrect min bet in the game " + game + ". Currency: " + currency + ".");
         }
     }
@@ -101,7 +103,7 @@ public class TestBetValues {
         for (String currency : currencies) {
             System.out.println("Checking max bet value for " + currency);
             ArrayList<Double> limitsFromFile = betLimits.getLimitsFromFile(game, currency);
-            Assert.assertEquals(betLimits.getMaxBet(game, currency), limitsFromFile.get(limitsFromFile.size() - 1),
+            Assert.assertEquals(betLimits.getMaxBetFromServer(game, currency), limitsFromFile.get(limitsFromFile.size() - 1),
                     "Incorrect max bet in the game " + game + ". Currency: " + currency + ".");
         }
     }
