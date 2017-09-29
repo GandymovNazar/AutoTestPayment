@@ -7,14 +7,30 @@
     <groupId>sw</groupId>
     <artifactId>limits</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <properties>
+        <jre.level>1.8</jre.level>
+        <jdk.level>1.8</jdk.level>
+    </properties>
+
     <build>
         <plugins>
+            <!-- Compiler plug-in -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>${jdk.level}</source>
+                    <target>${jdk.level}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.20.1</version>
+                <configuration>
+                    <suiteXmlFiles>
+                        <suiteXmlFile>testng.xml</suiteXmlFile>
+                    </suiteXmlFiles>
                 </configuration>
             </plugin>
         </plugins>
@@ -23,7 +39,7 @@
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>6.8</version>
+            <version>6.9.8</version>
             <scope>test</scope>
         </dependency>
         <dependency>
