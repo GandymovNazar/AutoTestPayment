@@ -18,7 +18,12 @@ public class TestLimits {
 
     @DataProvider(name = "allGames")
     public Object[][] allGames() {
-        return new Object[][]{{"sw_9s1k"}, {"sw_888t"}, {"sw_al"}, {"sw_db"}, {"sw_pp"}};
+        return new Object[][]
+                {{"sw_9s1k"}, {"sw_888t"}, {"sw_al"}, {"sw_db"}, {"sw_dd"}, {"sw_dhcf"}, {"sw_dj"}, {"sw_fbb"},
+                        {"sw_fp"}, {"sw_ggdn"}, {"sw_gm"}, {"sw_gol"}, {"sw_h2h"}, {"sw_hp"}, {"sw_ld"}, {"sw_lodk"},
+                        {"sw_mer"}, {"sw_mf"}, {"sw_mrmnky"}, {"sw_nyf"}, {"sw_omqjp"}, {"sw_pc"}, {"sw_qoiaf"}, {"sw_rf"},
+                        {"sw_rm"}, {"sw_rs"}, {"sw_scyd"}, {"sw_sf"}, {"sw_sgcf"}, {"sw_slbs"}, {"sw_sod"}, {"sw_sq"},
+                        {"sw_tc"}, {"sw_ycs"}};
     }
 
     @BeforeTest
@@ -32,11 +37,12 @@ public class TestLimits {
         Set<String> allCurrencies = betLimits.getAllCurrencies(game);
         StringBuilder errors = new StringBuilder("\n");
         for (String currency : allCurrencies) {
-            if (!betLimits.isCurrencyPresentForGameInServer(game, currency)){
+            if (!betLimits.isCurrencyPresentForGameInServer(game, currency)) {
                 errors.append(currency + " currency is not present on server for the game " + game + "\n");
             }
         }
-        throwError(errors, game, new Object(){}.getClass().getEnclosingMethod().getName());
+        throwError(errors, game, new Object() {
+        }.getClass().getEnclosingMethod().getName());
     }
 
     @Test(dataProvider = "allGames", alwaysRun = true)
@@ -44,7 +50,7 @@ public class TestLimits {
         Set<String> allCurrencies = betLimits.getAllCurrencies(game);
         StringBuilder errors = new StringBuilder("\n");
         for (String currency : allCurrencies) {
-            if (betLimits.isCurrencyPresentForGameInServer(game, currency)){
+            if (betLimits.isCurrencyPresentForGameInServer(game, currency)) {
                 long maxWinFromFile = betLimits.getMaxWinFromFile(game, currency);
                 long maxWinFromServer = Long.parseLong(betLimits.getLimitsFromServer(game, currency).get("winMax").toString());
                 try {
@@ -54,7 +60,8 @@ public class TestLimits {
                 }
             }
         }
-        throwError(errors, game, new Object(){}.getClass().getEnclosingMethod().getName());
+        throwError(errors, game, new Object() {
+        }.getClass().getEnclosingMethod().getName());
     }
 
     @Test(dataProvider = "allGames")
@@ -62,7 +69,7 @@ public class TestLimits {
         Set<String> allCurrencies = betLimits.getAllCurrencies(game);
         StringBuilder errors = new StringBuilder("\n");
         for (String currency : allCurrencies) {
-            if (betLimits.isCurrencyPresentForGameInServer(game, currency)){
+            if (betLimits.isCurrencyPresentForGameInServer(game, currency)) {
                 try {
                     Assert.assertEquals(betLimits.getDefaultBetFromServer(game, currency), betLimits.getDefaultBetFromFile(game, currency),
                             "Incorrect default bet in the game " + game + ". Currency: " + currency + ".");
@@ -71,7 +78,8 @@ public class TestLimits {
                 }
             }
         }
-        throwError(errors, game, new Object(){}.getClass().getEnclosingMethod().getName());
+        throwError(errors, game, new Object() {
+        }.getClass().getEnclosingMethod().getName());
     }
 
     @Test(dataProvider = "allGames")
@@ -79,7 +87,7 @@ public class TestLimits {
         Set<String> allCurrencies = betLimits.getAllCurrencies(game);
         StringBuilder errors = new StringBuilder("\n");
         for (String currency : allCurrencies) {
-            if (betLimits.isCurrencyPresentForGameInServer(game, currency)){
+            if (betLimits.isCurrencyPresentForGameInServer(game, currency)) {
                 try {
                     Assert.assertEquals(betLimits.getMaxBetFromServer(game, currency), betLimits.getMaxBetFromFile(game, currency),
                             "Incorrect max bet in the game " + game + ". Currency: " + currency + ".");
@@ -88,7 +96,8 @@ public class TestLimits {
                 }
             }
         }
-        throwError(errors, game, new Object(){}.getClass().getEnclosingMethod().getName());
+        throwError(errors, game, new Object() {
+        }.getClass().getEnclosingMethod().getName());
     }
 
     @Test(dataProvider = "allGames")
@@ -96,7 +105,7 @@ public class TestLimits {
         Set<String> allCurrencies = betLimits.getAllCurrencies(game);
         StringBuilder errors = new StringBuilder("\n");
         for (String currency : allCurrencies) {
-            if (betLimits.isCurrencyPresentForGameInServer(game, currency)){
+            if (betLimits.isCurrencyPresentForGameInServer(game, currency)) {
                 try {
                     Assert.assertEquals(betLimits.getMinBetFromServer(game, currency), betLimits.getMinBetFromFile(game, currency),
                             "Incorrect min bet in the game " + game + ". Currency: " + currency + ".");
@@ -106,7 +115,8 @@ public class TestLimits {
             }
 
         }
-        throwError(errors, game, new Object(){}.getClass().getEnclosingMethod().getName());
+        throwError(errors, game, new Object() {
+        }.getClass().getEnclosingMethod().getName());
     }
 
     @Test(dataProvider = "allGames")
@@ -114,7 +124,7 @@ public class TestLimits {
         Set<String> allCurrencies = betLimits.getAllCurrencies(game);
         StringBuilder errors = new StringBuilder("\n");
         for (String currency : allCurrencies) {
-            if (betLimits.isCurrencyPresentForGameInServer(game, currency)){
+            if (betLimits.isCurrencyPresentForGameInServer(game, currency)) {
                 try {
                     Assert.assertEquals(betLimits.getMaxTotalBetFromServer(game, currency), betLimits.getMaxTotalBetFromFile(game, currency),
                             "Incorrect max total bet in the game " + game + ". Currency: " + currency + ".");
@@ -123,7 +133,8 @@ public class TestLimits {
                 }
             }
         }
-        throwError(errors, game, new Object(){}.getClass().getEnclosingMethod().getName());
+        throwError(errors, game, new Object() {
+        }.getClass().getEnclosingMethod().getName());
     }
 
     @Test(dataProvider = "allGames")
@@ -131,7 +142,7 @@ public class TestLimits {
         Set<String> allCurrencies = betLimits.getAllCurrencies(game);
         StringBuilder errors = new StringBuilder("\n");
         for (String currency : allCurrencies) {
-            if (betLimits.isCurrencyPresentForGameInServer(game, currency)){
+            if (betLimits.isCurrencyPresentForGameInServer(game, currency)) {
                 try {
                     JSONArray betValuesFormServer = (JSONArray) betLimits.getLimitsFromServer(game, currency).get("stakeAll");
                     JSONArray betValuesFromFile = betLimits.getBetListFromFile(game, currency);
@@ -142,10 +153,11 @@ public class TestLimits {
                 }
             }
         }
-        throwError(errors, game, new Object(){}.getClass().getEnclosingMethod().getName());
+        throwError(errors, game, new Object() {
+        }.getClass().getEnclosingMethod().getName());
     }
 
-    private void throwError(StringBuilder message, String game, String testName){
+    private void throwError(StringBuilder message, String game, String testName) {
         if (!Objects.equals(message.toString(), "\n")) {
             throw new AssertionError(message.toString());
         } else {
