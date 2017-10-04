@@ -45,11 +45,13 @@ public class TestReelSets {
                 for (int j = 0; j < reel.length(); j++) {
                     reelFromServer.add((Integer) reel.get(j));
                 }
-                try {
-                    Assert.assertEquals(reelFromServer, reelFromFile,
-                            "Incorrect reel set: " + setName + ". Reel " + (i + 1));
-                } catch (AssertionError e){
-                    errors.append(e.getMessage()).append("\n");
+                for (int g = 0; g < reelFromFile.size(); g++) {
+                    try {
+                        Assert.assertEquals(reelFromServer.get(g), reelFromFile.get(g),
+                                "Incorrect reel set: " + setName.replace(".csv", "") + ". Reel: " + (i + 1) + ", element: " + g + " -");
+                    } catch (AssertionError e) {
+                        errors.append(e.getMessage()).append("\n");
+                    }
                 }
                 reelFromServer.clear();
             }
