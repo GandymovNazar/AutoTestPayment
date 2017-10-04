@@ -23,7 +23,7 @@ public class TestLimits {
                         {"sw_fp"}, {"sw_ggdn"}, {"sw_gm"}, {"sw_gol"}, {"sw_h2h"}, {"sw_hp"}, {"sw_ld"}, {"sw_lodk"},
                         {"sw_mer"}, {"sw_mf"}, {"sw_mrmnky"}, {"sw_nyf"}, {"sw_omqjp"}, {"sw_pc"}, {"sw_qoiaf"}, {"sw_rf"},
                         {"sw_rm"}, {"sw_rs"}, {"sw_scyd"}, {"sw_sf"}, {"sw_sgcf"}, {"sw_slbs"}, {"sw_sod"}, {"sw_sq"},
-                        {"sw_tc"}, {"sw_ycs"}};
+                        {"sw_tc"},{"sw_wq"}, {"sw_ycs"}};
     }
 
     @BeforeTest

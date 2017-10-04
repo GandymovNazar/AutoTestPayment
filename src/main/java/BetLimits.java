@@ -129,6 +129,18 @@ class BetLimits {
         return -1;
     }
 
+    String getDefaultBetFromServer(String gameName, String currency, boolean techWriter) throws UnirestException {
+        for (int i = 0; i < allGamesFromServer.length(); i++) {
+            if (Objects.equals(allGamesFromServer.getJSONObject(i).get("code"), gameName)) {
+                JSONObject limits = (JSONObject) allGamesFromServer.getJSONObject(i).get("limits");
+                JSONObject currencyLimits = (JSONObject) limits.get(currency);
+                return currencyLimits.get("stakeDef").toString();
+            }
+
+        }
+        return "";
+    }
+
     int getDefaultBetElement(String game) throws IOException {
         String file = new String(Files.readAllBytes(Paths.get(Constants.resources + "/defaultBetElement.json")));
         JsonNode default_bet_elements = new JsonNode(file);
