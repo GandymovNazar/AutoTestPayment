@@ -38,10 +38,16 @@ public class TestLimits {
         StringBuilder errors = new StringBuilder("\n");
         for (String currency : allCurrencies) {
             if (!betLimits.isCurrencyPresentForGameInServer(game, currency)) {
-                errors.append(currency + " currency is not present on server for the game " + game + "\n");
+                if (!errors.toString().contains("List of currencies which not present on server for game")){
+                    errors.append(String.format("List of currencies which not present on server for game %s:\n", game));
+                }
+                errors.append(String.format("%s, ", currency));
             }
         }
-        throwError(errors, game, new Object() {
+        if (!Objects.equals(errors.toString(), "\n")) {
+            errors = errors.delete(errors.length() - 2, errors.length()).append(".");
+        }
+        throwError(errors.toString(), game, new Object() {
         }.getClass().getEnclosingMethod().getName());
     }
 
@@ -54,13 +60,16 @@ public class TestLimits {
                 long maxWinFromFile = betLimits.getMaxWinFromFile(game, currency);
                 long maxWinFromServer = Long.parseLong(betLimits.getLimitsFromServer(game, currency).get("winMax").toString());
                 try {
-                    Assert.assertEquals(maxWinFromServer, maxWinFromFile, "Incorrect winMax value in the game " + game + ". Currency: " + currency + ".");
+                    Assert.assertEquals(maxWinFromServer, maxWinFromFile, "Currency: " + currency + ".");
                 } catch (AssertionError e) {
+                    if (!errors.toString().contains("Incorrect winMax value in the game")){
+                        errors.append(String.format("Incorrect winMax value in the game %s.\n", game));
+                    }
                     errors.append(e.getMessage()).append("\n");
                 }
             }
         }
-        throwError(errors, game, new Object() {
+        throwError(errors.toString(), game, new Object() {
         }.getClass().getEnclosingMethod().getName());
     }
 
@@ -72,13 +81,16 @@ public class TestLimits {
             if (betLimits.isCurrencyPresentForGameInServer(game, currency)) {
                 try {
                     Assert.assertEquals(betLimits.getDefaultBetFromServer(game, currency), betLimits.getDefaultBetFromFile(game, currency),
-                            "Incorrect default bet in the game " + game + ". Currency: " + currency + ".");
+                            "Currency: " + currency + ".");
                 } catch (AssertionError e) {
+                    if (!errors.toString().contains("Incorrect default bet in the game")){
+                        errors.append(String.format("Incorrect default bet in the game %s.\n", game));
+                    }
                     errors.append(e.getMessage()).append("\n");
                 }
             }
         }
-        throwError(errors, game, new Object() {
+        throwError(errors.toString(), game, new Object() {
         }.getClass().getEnclosingMethod().getName());
     }
 
@@ -90,13 +102,16 @@ public class TestLimits {
             if (betLimits.isCurrencyPresentForGameInServer(game, currency)) {
                 try {
                     Assert.assertEquals(betLimits.getMaxBetFromServer(game, currency), betLimits.getMaxBetFromFile(game, currency),
-                            "Incorrect max bet in the game " + game + ". Currency: " + currency + ".");
+                            "Currency: " + currency + ".");
                 } catch (AssertionError e) {
+                    if (!errors.toString().contains("Incorrect max bet in the game")){
+                        errors.append(String.format("Incorrect max bet in the game %s.\n", game));
+                    }
                     errors.append(e.getMessage()).append("\n");
                 }
             }
         }
-        throwError(errors, game, new Object() {
+        throwError(errors.toString(), game, new Object() {
         }.getClass().getEnclosingMethod().getName());
     }
 
@@ -108,14 +123,17 @@ public class TestLimits {
             if (betLimits.isCurrencyPresentForGameInServer(game, currency)) {
                 try {
                     Assert.assertEquals(betLimits.getMinBetFromServer(game, currency), betLimits.getMinBetFromFile(game, currency),
-                            "Incorrect min bet in the game " + game + ". Currency: " + currency + ".");
+                            "Currency: " + currency + ".");
                 } catch (AssertionError e) {
+                    if (!errors.toString().contains("Incorrect min bet in the game")){
+                        errors.append(String.format("Incorrect min bet in the game %s.\n", game));
+                    }
                     errors.append(e.getMessage()).append("\n");
                 }
             }
 
         }
-        throwError(errors, game, new Object() {
+        throwError(errors.toString(), game, new Object() {
         }.getClass().getEnclosingMethod().getName());
     }
 
@@ -127,13 +145,16 @@ public class TestLimits {
             if (betLimits.isCurrencyPresentForGameInServer(game, currency)) {
                 try {
                     Assert.assertEquals(betLimits.getMaxTotalBetFromServer(game, currency), betLimits.getMaxTotalBetFromFile(game, currency),
-                            "Incorrect max total bet in the game " + game + ". Currency: " + currency + ".");
+                            "Currency: " + currency + ".");
                 } catch (AssertionError e) {
+                    if (!errors.toString().contains("Incorrect max total bet in the game")){
+                        errors.append(String.format("Incorrect max total bet in the game %s.\n", game));
+                    }
                     errors.append(e.getMessage()).append("\n");
                 }
             }
         }
-        throwError(errors, game, new Object() {
+        throwError(errors.toString(), game, new Object() {
         }.getClass().getEnclosingMethod().getName());
     }
 
@@ -147,19 +168,22 @@ public class TestLimits {
                     JSONArray betValuesFormServer = (JSONArray) betLimits.getLimitsFromServer(game, currency).get("stakeAll");
                     JSONArray betValuesFromFile = betLimits.getBetListFromFile(game, currency);
                     Assert.assertEquals(betValuesFormServer.toString(), betValuesFromFile.toString(),
-                            "Error in the bet values. Game: " + game + ". Currency: " + currency + ".");
+                            "Currency: " + currency + ".");
                 } catch (AssertionError e) {
+                    if (!errors.toString().contains("Error in the bet values. Game: ")){
+                        errors.append(String.format("Error in the bet values. Game: %s.\n", game));
+                    }
                     errors.append(e.getMessage()).append("\n");
                 }
             }
         }
-        throwError(errors, game, new Object() {
+        throwError(errors.toString(), game, new Object() {
         }.getClass().getEnclosingMethod().getName());
     }
 
-    private void throwError(StringBuilder message, String game, String testName) {
-        if (!Objects.equals(message.toString(), "\n")) {
-            throw new AssertionError(message.toString());
+    private void throwError(String message, String game, String testName) {
+        if (!Objects.equals(message, "\n")) {
+            throw new AssertionError(message);
         } else {
             System.out.println(game + " " + testName + " PASSED");
         }
