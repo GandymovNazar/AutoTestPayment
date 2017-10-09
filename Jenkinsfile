@@ -22,7 +22,7 @@ pipeline {
             }
             post {
                 always {
-                    publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: false, reportDir: 'target/surefire-reports/', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: 'Bet Limits and Reel Sets Report'])
+                    publishHTML(target: [reportDir: 'target/surefire-reports', reportFiles: 'index.html', reportName: 'Bet Limits and Reels Sets Test Report'])
                 }
             }
         }
