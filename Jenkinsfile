@@ -20,6 +20,11 @@ pipeline {
                     sh "mvn clean compile test -Denv=${env.ENV}"
                 }
             }
+            post {
+                always {
+                    junit 'target/surefire-reports/index.html'
+                }
+            }
         }
     }
 }
