@@ -22,7 +22,7 @@ pipeline {
             }
             post {
                 always {
-                    junit 'target/surefire-reports/index.html'
+                    junit 'target/surefire-reports/junitreports/*.xml'
                 }
             }
         }
