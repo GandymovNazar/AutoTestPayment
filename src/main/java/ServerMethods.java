@@ -93,10 +93,11 @@ class ServerMethods {
                 "\"date_of_birth\": \"12/12/1990\"" +
                 "}";
 
-        Unirest.post(apiIpmMockStage + "merchant/swftest2_1/customer")
+        HttpResponse<JsonNode> response = Unirest.post(apiIpmMockStage + "merchant/swftest2_1/customer")
                 .header("x-access-token", accessToken)
                 .header("Content-Type", "application/json")
                 .body(body).asJson();
+        System.out.println(response.getBody());
     }
 
 
@@ -109,6 +110,19 @@ class ServerMethods {
         return response.getBody();
     }
 
+
+    String getUserBalance(String custId) throws UnirestException {
+        HttpResponse<JsonNode> response = Unirest.get(MessageFormat.format(
+                "{0}merchant/swftest2_1/customer/{1}", apiIpmMockStage, custId))
+                .header("Content-Type", "application/json")
+                .header("X-ACCESS-TOKEN", "AAAAA")
+                .asJson();
+        JSONObject balanceNode = (JSONObject) response.getBody().getObject().get("balance");
+        String amount = balanceNode.get("amount").toString();
+        String currency_code = balanceNode.get("currency_code").toString();
+        System.out.println(String.format("Balance of the user %s is %s%s", custId, currency_code, amount));
+        return amount;
+    }
 
     void addBalance(String custId, String currency, String balance, String accessToken) throws UnirestException {
         String body = "{\"cust_id\": \"" + custId + "\"," +
@@ -133,11 +147,12 @@ class ServerMethods {
                 "\"rakeback\": false," +
                 "\"date_of_birth\": \"12/12/1990\"" +
                 "}";
-        Unirest.post(MessageFormat.format(
+        HttpResponse<JsonNode> response = Unirest.post(MessageFormat.format(
                 apiIpmMockStage + "merchant/swftest2_1/customer/{0}/balance/{1}", custId, balance))
                 .header("x-access-token", accessToken)
                 .header("Content-Type", "application/json")
                 .body(body).asJson();
+        System.out.println(response.getBody());
     }
 
 
