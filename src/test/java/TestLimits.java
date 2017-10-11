@@ -11,7 +11,8 @@ import java.util.Set;
 
 public class TestLimits {
 
-    private BetLimits betLimits = new BetLimits();
+    private ServerMethods server = new ServerMethods();
+    private LocalMethods local = new LocalMethods();
 
     public TestLimits() throws UnirestException {
     }
@@ -34,10 +35,10 @@ public class TestLimits {
 
     @Test(dataProvider = "allGames")
     public void isCurrencyPresentOnServer(String game) throws IOException, UnirestException {
-        Set<String> allCurrencies = betLimits.getAllCurrencies(game);
+        Set<String> allCurrencies = local.getAllCurrencies(game);
         StringBuilder errors = new StringBuilder("\n");
         for (String currency : allCurrencies) {
-            if (!betLimits.isCurrencyPresentForGameInServer(game, currency)) {
+            if (!server.isCurrencyPresentForGameInServer(game, currency)) {
                 if (!errors.toString().contains("List of currencies which not present on server for game")){
                     errors.append(String.format("List of currencies which not present on server for game %s:\n", game));
                 }
@@ -53,12 +54,12 @@ public class TestLimits {
 
     @Test(dataProvider = "allGames", alwaysRun = true)
     public void testMaxWin(String game) throws IOException, UnirestException {
-        Set<String> allCurrencies = betLimits.getAllCurrencies(game);
+        Set<String> allCurrencies = local.getAllCurrencies(game);
         StringBuilder errors = new StringBuilder("\n");
         for (String currency : allCurrencies) {
-            if (betLimits.isCurrencyPresentForGameInServer(game, currency)) {
-                long maxWinFromFile = betLimits.getMaxWinFromFile(game, currency);
-                long maxWinFromServer = Long.parseLong(betLimits.getLimitsFromServer(game, currency).get("winMax").toString());
+            if (server.isCurrencyPresentForGameInServer(game, currency)) {
+                long maxWinFromFile = local.getMaxWinFromFile(game, currency);
+                long maxWinFromServer = Long.parseLong(server.getLimitsFromServer(game, currency).get("winMax").toString());
                 try {
                     Assert.assertEquals(maxWinFromServer, maxWinFromFile, "Currency: " + currency + ".");
                 } catch (AssertionError e) {
@@ -75,12 +76,12 @@ public class TestLimits {
 
     @Test(dataProvider = "allGames")
     public void testDefaultBet(String game) throws IOException, UnirestException {
-        Set<String> allCurrencies = betLimits.getAllCurrencies(game);
+        Set<String> allCurrencies = local.getAllCurrencies(game);
         StringBuilder errors = new StringBuilder("\n");
         for (String currency : allCurrencies) {
-            if (betLimits.isCurrencyPresentForGameInServer(game, currency)) {
+            if (server.isCurrencyPresentForGameInServer(game, currency)) {
                 try {
-                    Assert.assertEquals(betLimits.getDefaultBetFromServer(game, currency), betLimits.getDefaultBetFromFile(game, currency),
+                    Assert.assertEquals(server.getDefaultBetFromServer(game, currency), local.getDefaultBetFromFile(game, currency),
                             "Currency: " + currency + ".");
                 } catch (AssertionError e) {
                     if (!errors.toString().contains("Incorrect default bet in the game")){
@@ -96,12 +97,12 @@ public class TestLimits {
 
     @Test(dataProvider = "allGames")
     public void testMaxBet(String game) throws IOException, UnirestException {
-        Set<String> allCurrencies = betLimits.getAllCurrencies(game);
+        Set<String> allCurrencies = local.getAllCurrencies(game);
         StringBuilder errors = new StringBuilder("\n");
         for (String currency : allCurrencies) {
-            if (betLimits.isCurrencyPresentForGameInServer(game, currency)) {
+            if (server.isCurrencyPresentForGameInServer(game, currency)) {
                 try {
-                    Assert.assertEquals(betLimits.getMaxBetFromServer(game, currency), betLimits.getMaxBetFromFile(game, currency),
+                    Assert.assertEquals(server.getMaxBetFromServer(game, currency), local.getMaxBetFromFile(game, currency),
                             "Currency: " + currency + ".");
                 } catch (AssertionError e) {
                     if (!errors.toString().contains("Incorrect max bet in the game")){
@@ -117,12 +118,12 @@ public class TestLimits {
 
     @Test(dataProvider = "allGames")
     public void testMinBet(String game) throws IOException, UnirestException {
-        Set<String> allCurrencies = betLimits.getAllCurrencies(game);
+        Set<String> allCurrencies = local.getAllCurrencies(game);
         StringBuilder errors = new StringBuilder("\n");
         for (String currency : allCurrencies) {
-            if (betLimits.isCurrencyPresentForGameInServer(game, currency)) {
+            if (server.isCurrencyPresentForGameInServer(game, currency)) {
                 try {
-                    Assert.assertEquals(betLimits.getMinBetFromServer(game, currency), betLimits.getMinBetFromFile(game, currency),
+                    Assert.assertEquals(server.getMinBetFromServer(game, currency), local.getMinBetFromFile(game, currency),
                             "Currency: " + currency + ".");
                 } catch (AssertionError e) {
                     if (!errors.toString().contains("Incorrect min bet in the game")){
@@ -139,12 +140,12 @@ public class TestLimits {
 
     @Test(dataProvider = "allGames")
     public void testMaxTotalBet(String game) throws IOException, UnirestException {
-        Set<String> allCurrencies = betLimits.getAllCurrencies(game);
+        Set<String> allCurrencies = local.getAllCurrencies(game);
         StringBuilder errors = new StringBuilder("\n");
         for (String currency : allCurrencies) {
-            if (betLimits.isCurrencyPresentForGameInServer(game, currency)) {
+            if (server.isCurrencyPresentForGameInServer(game, currency)) {
                 try {
-                    Assert.assertEquals(betLimits.getMaxTotalBetFromServer(game, currency), betLimits.getMaxTotalBetFromFile(game, currency),
+                    Assert.assertEquals(server.getMaxTotalBetFromServer(game, currency), local.getMaxTotalBetFromFile(game, currency),
                             "Currency: " + currency + ".");
                 } catch (AssertionError e) {
                     if (!errors.toString().contains("Incorrect max total bet in the game")){
@@ -160,13 +161,13 @@ public class TestLimits {
 
     @Test(dataProvider = "allGames")
     public void testBetValues(String game) throws IOException, UnirestException {
-        Set<String> allCurrencies = betLimits.getAllCurrencies(game);
+        Set<String> allCurrencies = local.getAllCurrencies(game);
         StringBuilder errors = new StringBuilder("\n");
         for (String currency : allCurrencies) {
-            if (betLimits.isCurrencyPresentForGameInServer(game, currency)) {
+            if (server.isCurrencyPresentForGameInServer(game, currency)) {
                 try {
-                    JSONArray betValuesFormServer = (JSONArray) betLimits.getLimitsFromServer(game, currency).get("stakeAll");
-                    JSONArray betValuesFromFile = betLimits.getBetListFromFile(game, currency);
+                    JSONArray betValuesFormServer = (JSONArray) server.getLimitsFromServer(game, currency).get("stakeAll");
+                    JSONArray betValuesFromFile = local.getBetListFromFile(game, currency);
                     Assert.assertEquals(betValuesFormServer.toString(), betValuesFromFile.toString(),
                             "Currency: " + currency + ".");
                 } catch (AssertionError e) {
