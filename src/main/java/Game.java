@@ -32,17 +32,24 @@ class Game {
     }
 
     void pressPlayGame() throws InterruptedException {
+        int maxWait = 60 * 1000;
+        int timeout = 2000;
+        int waited = 0;
         try {
             String js = "return c_button.emit('click')";
             boolean test = (boolean) driver.executeScript(js);
             if (!test) {
                 Thread.sleep(1000);
+                waited +=1000;
                 pressPlayGame();
             }
+            if (waited > maxWait){
+                throw new AssertionError("Can't find button Play game");
+            }
         } catch (WebDriverException e) {
-            int sec = 2000/1000;
-            System.out.println(String.format("Waiting for \"Play game\" button for %s sec.", sec));
-            Thread.sleep(sec * 1000);
+//            System.out.println(String.format("Waiting for \"Play game\" button for %s sec.", timeout));
+            Thread.sleep(timeout);
+            waited+=timeout;
             pressPlayGame();
         }
     }

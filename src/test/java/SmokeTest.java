@@ -35,6 +35,7 @@ public class SmokeTest {
         }
         System.setProperty("webdriver.chrome.driver", CHROME_DRIVER);
         driver = new ChromeDriver();
+        driver.manage().window().maximize();
 
     }
 
@@ -80,7 +81,31 @@ public class SmokeTest {
         };
     }
 
-    @Test(dataProvider = "someGames")
+
+    @DataProvider(name = "mark2Games")
+    public Object[][] mark2Games() {
+        return new Object[][]{
+                {"sw_db", "10,10,10,10,10"},
+                {"sw_dhcf", "10,10,10,10,10"},
+                {"sw_dj", "10,10,10,10,10"},
+                {"sw_fp", "1,1,1,1,1"},
+                {"sw_gm", "1,1,1,1,1"},
+                {"sw_nyf", "1,1,1,1,1"},
+                {"sw_rf", "1,1,1,1,1"},
+                {"sw_sf", "1,1,1,1,1"},
+                {"sw_sgcf", "10,10,10,10,10"},
+                {"sw_slbs", "10,10,10,10,10"},
+                {"sw_tc", "10,10,10,10,10"},
+                {"sw_ycs", "1,1,1,1,1"},
+                {"sw_pc", "10,10,10,10,10"},
+                {"sw_omqjp", "54,57,57,58,56,4"},
+                {"sw_dd", "5,5,5,5,5"},
+                {"sw_wq", "5,5,5,5,5"}
+        };
+    }
+
+
+    @Test(dataProvider = "mark2Games")
     public void testSpin(String game, String loseCheat) throws IOException, InterruptedException,
             FindFailed, UnirestException, AWTException {
 
@@ -91,7 +116,6 @@ public class SmokeTest {
         ServerMethods server = new ServerMethods();
         LocalMethods local = new LocalMethods();
 
-        driver.manage().window().maximize();
 
         String token = server.getToken(Constants.ENVIRONMENT);
         server.createPlayer(custId, currency, token);

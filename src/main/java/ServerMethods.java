@@ -97,7 +97,7 @@ class ServerMethods {
                 .header("x-access-token", accessToken)
                 .header("Content-Type", "application/json")
                 .body(body).asJson();
-        System.out.println(response.getBody());
+        System.out.println(response.getStatus() == 200 ? String.format("Player %s created", custId) : "Something went wrong when creating user.");
     }
 
 
@@ -120,7 +120,7 @@ class ServerMethods {
         JSONObject balanceNode = (JSONObject) response.getBody().getObject().get("balance");
         String amount = balanceNode.get("amount").toString();
         String currency_code = balanceNode.get("currency_code").toString();
-        System.out.println(String.format("Balance of the user %s is %s%s", custId, currency_code, amount));
+        System.out.println(String.format("Balance of the user %s is %s %s", custId, amount, currency_code));
         return amount;
     }
 
@@ -152,7 +152,7 @@ class ServerMethods {
                 .header("x-access-token", accessToken)
                 .header("Content-Type", "application/json")
                 .body(body).asJson();
-        System.out.println(response.getBody());
+        System.out.println(response.getStatus() == 200 ? String.format(" Added %s %s to player %s", balance, currency,  custId) : "Something went wrong when adding money.");
     }
 
 
