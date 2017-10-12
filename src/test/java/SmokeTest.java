@@ -1,9 +1,8 @@
 import com.mashape.unirest.http.exceptions.UnirestException;
-import org.openqa.selenium.By;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.sikuli.basics.Settings;
 import org.sikuli.script.FindFailed;
 import org.testng.Assert;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -12,16 +11,31 @@ import java.awt.*;
 import java.io.IOException;
 
 
-
 public class SmokeTest {
     public static void main(String[] args) throws FindFailed, InterruptedException, IOException {
     }
 
+    private ChromeDriver driver;
+
     @BeforeClass
     public void settings() {
-        String CHROME_DRIVER = "src\\main\\java\\chromedriver.exe";
+        String os = System.getProperty("os.name").toLowerCase();
+        System.out.println(os);
+        String CHROME_DRIVER;
+        switch (os) {
+            case "win":
+                CHROME_DRIVER = "drivers\\chromedriver.exe";
+                break;
+            case "mac os x":
+                CHROME_DRIVER = "drivers/chromedriver";
+                break;
+            default:
+                CHROME_DRIVER = "drivers\\chromedriver.exe";
+                break;
+        }
         System.setProperty("webdriver.chrome.driver", CHROME_DRIVER);
-        Settings.AutoWaitTimeout = 80f;
+        driver = new ChromeDriver();
+
     }
 
     @DataProvider(name = "someGames")
@@ -37,7 +51,7 @@ public class SmokeTest {
 //                {"sw_dj", "10,10,10,10,10", 150},
 //                {"sw_fbb", "10,7,0,0,0", 160},
 //                {"sw_fp", "1,1,1,1,1", 200},
-//                {"sw_gm", "1,1,1,1,1", 200},
+                {"sw_gm", "1,1,1,1,1"},
 //                {"sw_h2h", "10,10,10,10,10", 180},
 //                {"sw_hp", "10,10,10,10,10", 200},
 //                {"sw_lodk", "1,1,1,1,1", 200},
@@ -55,7 +69,7 @@ public class SmokeTest {
 //                {"sw_ycs", "1,1,1,1,1", 180},
 //                {"sw_sod", "1,3,5,7,9", 180},
 //                {"sw_rm", "0,0,0,0,0", 200},
-                {"sw_pc", "10,10,10,10,10", 200}
+                {"sw_pc", "10,10,10,10,10"}
 //                {"sw_omqjp", "54,57,57,58,56,4", 200},
 //                {"sw_mrmnky", "5,5,5,5,5", 200},
 //                {"sw_gol", "5,5,5,5,5", 240},
@@ -67,101 +81,61 @@ public class SmokeTest {
     }
 
     @Test(dataProvider = "someGames")
-    public void testSpin(String game, String loseCheat, int defaultTotalBet) throws IOException, InterruptedException,
+    public void testSpin(String game, String loseCheat) throws IOException, InterruptedException,
             FindFailed, UnirestException, AWTException {
-
-        ChromeDriver driver = new ChromeDriver();
 
         String custId = "Dimon";
         String currency = "USD";
         String balance = "10";
 
-        Methods gameName = new Methods();
+        ServerMethods server = new ServerMethods();
+        LocalMethods local = new LocalMethods();
 
         driver.manage().window().maximize();
 
-        String token = gameName.getAdminToken();
-        gameName.createPlayer(custId,currency, token);
-        gameName.addBalance(custId, currency, balance, token);
-        String ticket = gameName.getTicket(custId);
-        String linkForTheGame = gameName.getGameToken(game, token, ticket);
+        String token = server.getToken(Constants.ENVIRONMENT);
+        server.createPlayer(custId, currency, token);
+        server.addBalance(custId, currency, balance, token);
+        String ticket = server.getTicket(custId);
+        String linkForTheGame = server.getGameToken(game, token, ticket);
 
         driver.get(linkForTheGame);
-
-        Thread.sleep(10000);
-//        Object data = driver.executeScript("return c_button.visible");
-//        System.out.println(data);
-
-//        WebDriverWait wait = new WebDriverWait(driver, 20);
-//        System.out.println(driver.executeScript("c_button.visible"));
-//        wait.until(ExpectedConditions.jsReturnsValue(""));
-
-
-//        wait.until(ExpectedConditions.jsReturnsValue("c_button.visible"));
-
-
-        // press button "Play game"
-        driver.executeScript("c_button.emit('click')");
-
-
-
-//        // screenshot
-//        Screen screen = new Screen();
-//
-//        // Open the game. Press button 'Play'
-//        Pattern pattern = new Pattern(resources_folder + "button_play.png").similar(0.8f);
-//
-//        screen.find(pattern).click();
-
-        //driver.executeScript("(function(){alert(1)})();");
-
-//        Mouse.move(150, 150);
-//        Thread.sleep(1000);
-
-        // Balance in the beginning
-        String startBalance = driver.findElement(By.className("footer-balance-value")).getText()
-                .replace("$", "")
-                .replace(".", "")
-                .replace(",", "");
-        int startBalanceInt = Integer.parseInt(startBalance);
-
-
-        // set Cheat
-        Game cheatsForGame = new Game();
-        cheatsForGame.sendCheat(loseCheat, driver);
-
+        Game gameObject = new Game(driver);
 
         Thread.sleep(1000);
-        driver.executeScript("c_spinButton.emit('click')");
+
+        gameObject.pressPlayGame();
+        Double startBalance = Double.parseDouble(server.getUserBalance(custId));
+        gameObject.sendCheat(loseCheat);
+        Thread.sleep(1000);
+        gameObject.pressSpin();
 //        Object data = driver.executeScript("return c_infoLabel.text");
 //        System.out.println(data);
 
         Thread.sleep(4000);
-        // set Cheat
-        cheatsForGame.sendCheat(loseCheat, driver);
-
-        // do the 2-nd spin
+        gameObject.sendCheat(loseCheat);
         Thread.sleep(1000);
-        driver.executeScript("c_spinButton.emit('click')");
-
+        gameObject.pressSpin();
         // the balance after 2 spins
-        String endBalance = driver.findElement(By.className("footer-balance-value")).getText()
-                .replace("$", "")
-                .replace(".", "")
-                .replace(",", "");
-        int endBalanceInt = Integer.parseInt(endBalance);
+        double endBalance = Double.parseDouble(server.getUserBalance(custId));
 
-        System.out.println("[" + game + "] " + "Balance in the beginning: " + startBalanceInt);
+        System.out.println("[" + game + "] " + "Balance in the beginning: " + startBalance);
+        double defaultBet = local.getDefaultBetFromFile(game, currency);
+        double maxBet = local.getMaxBetFromFile(game, currency);
+        double maxTotalBet = local.getMaxTotalBetFromFile(game, currency);
+        double defaultTotalBet = maxTotalBet / maxBet * defaultBet;
         System.out.println("[" + game + "] " + "The sum of bets: " + (defaultTotalBet + defaultTotalBet));
         System.out.println("[" + game + "] " + "Final balance: " + endBalance);
 
         // Validation of balance
-        Assert.assertEquals((startBalanceInt - defaultTotalBet - defaultTotalBet), endBalanceInt,
+        Assert.assertEquals((startBalance - defaultTotalBet - defaultTotalBet), endBalance,
                 "Balance isn't correct");
 
-        // Добавить дефолтную ставку. Сверять ставку в игре с заданой
-
         Thread.sleep(5000);
+    }
+
+    @AfterSuite
+    public void closeDriver(){
         driver.close();
     }
 
