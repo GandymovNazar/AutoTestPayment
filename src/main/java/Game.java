@@ -3,15 +3,22 @@ import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 class Game {
 
     private ChromeDriver driver;
+    private String mark;
+    private int waited = 0;
 //    private JavascriptExecutor executor = (JavascriptExecutor) driver;
 
-    Game (ChromeDriver driver){
+    Game(ChromeDriver driver, String mark) {
         this.driver = driver;
+        this.mark = mark;
     }
-
 
     void sendCheat(String cheat){
         try {
@@ -34,31 +41,108 @@ class Game {
     void pressPlayGame() throws InterruptedException {
         int maxWait = 60 * 1000;
         int timeout = 2000;
-        int waited = 0;
+        String js;
+        switch (mark) {
+            case "mark2":
+                js = "return c_button.emit('click')";
+                break;
+            case "mark3":
+                js = "return c_playBtn.emit('click')";
+                break;
+            case "mark4":
+                js = "return c_button.emit('click')";
+                break;
+            default:
+                js = "return c_button.emit('click')";
+                break;
+        }
+        if (waited > maxWait){
+            throw new AssertionError("Can't find button Play game. Waited " + maxWait / 1000 + " sec.");
+        }
         try {
-            String js = "return c_button.emit('click')";
             boolean test = (boolean) driver.executeScript(js);
+
             if (!test) {
-                Thread.sleep(1000);
-                waited +=1000;
+                Thread.sleep(timeout);
+                waited +=timeout;
                 pressPlayGame();
             }
-            if (waited > maxWait){
-                throw new AssertionError("Can't find button Play game");
-            }
         } catch (WebDriverException e) {
+            waited +=timeout;
 //            System.out.println(String.format("Waiting for \"Play game\" button for %s sec.", timeout));
             Thread.sleep(timeout);
-            waited+=timeout;
             pressPlayGame();
         }
     }
 
     void pressSpin(){
-        driver.executeScript("c_spinButton.emit('click')");
+        String js;
+        switch (mark){
+            case "mark2":
+                js = "c_spinButton.emit('click')";
+                break;
+            case  "mark3":
+                js = "c_spinButton.emit('click')";
+                break;
+            case  "mark4":
+                js = "c_spinButton.emit('click')";
+                break;
+            default:
+                js = "c_spinButton.emit('click')";
+                break;
+        }
+        driver.executeScript(js);
     }
 
 
+    double getBalanceFromUi() {
+        String balanceFromUi = driver.findElement(By.className("footer-balance-value")).getText()
+//                .replace(".", "")
+                .replace(",", "");
+        Pattern p = Pattern.compile("\\d+\\.\\d+");
+        Matcher m = p.matcher(balanceFromUi);
+        if (m.find()) {
+            balanceFromUi = m.group(0);
+        }
+        return Double.parseDouble(balanceFromUi);
+
+    }
+
+    double getTotalBet() {
+       String js = "return c_totalbetLabel.text";
+       Pattern p = Pattern.compile("\\d+.\\d+|\\d+");
+       Object data = driver.executeScript(js);
+       String d = (String) data;
+       Matcher m = p.matcher(d);
+        if (m.find()) {
+            d = m.group(0);
+        }
+       return Double.parseDouble(d);
+    }
+
+    double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = new BigDecimal(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
+
+    void pause(){
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    void pause(int sec){
+        try {
+            Thread.sleep(sec * 1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 }
