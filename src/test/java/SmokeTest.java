@@ -84,7 +84,7 @@ public class SmokeTest {
     }
 
     @Test(dataProvider = "allGames")
-    public void testSpin(String game, String loseCheat, String mark) throws IOException, InterruptedException,
+    public void testSpin(String gameName, String loseCheat, String mark) throws IOException, InterruptedException,
             FindFailed, UnirestException, AWTException {
 
         String custId = "Dimons";
@@ -100,45 +100,45 @@ public class SmokeTest {
         server.createPlayer(custId, currency, token);
         server.addBalance(custId, currency, balance, token);
         String ticket = server.getTicket(custId);
-        String linkForTheGame = server.getGameToken(game, token, ticket);
+        String linkForTheGame = server.getGameToken(gameName, token, ticket);
 
         driver.get(linkForTheGame);
-        Game gameObject = new Game(driver, mark);
+        Game game = new Game(driver, mark);
 
-        gameObject.pressPlayGame();
+        game.pressPlayGame();
 //        Double startBalance = Double.parseDouble(server.getUserBalance(custId));
-        double startBalance = gameObject.getBalanceFromUi();
+        double startBalance = game.getBalanceFromUi();
 
-        gameObject.sendCheat(loseCheat);
-        gameObject.pause();
-        double totalBet = gameObject.getTotalBet(mark);
-        gameObject.pressSpin();
+        game.sendCheat(loseCheat);
+        game.pause();
+        double totalBet = game.getTotalBet(mark);
+        game.pressSpin();
 //        Object data = driver.executeScript("return c_infoLabel.text");
 //        System.out.println(data);
 
-        gameObject.pause(3);
-        gameObject.sendCheat(loseCheat);
-        gameObject.pause();
-        gameObject.pressSpin();
-        gameObject.pause();
+        game.pause(3);
+        game.sendCheat(loseCheat);
+        game.pause();
+        game.pressSpin();
+        game.pause();
         // the balance after 2 spins
 //        double endBalance = Double.parseDouble(server.getUserBalance(custId));
-        double endBalance = gameObject.getBalanceFromUi();
+        double endBalance = game.getBalanceFromUi();
 
-        System.out.println("[" + game + "] " + "Balance in the beginning: " + startBalance);
+        System.out.println("[" + gameName + "] " + "Balance in the beginning: " + startBalance);
 //        for server's value
 //        double defaultBet = local.getDefaultBetFromFile(game, currency);
 //        double maxBet = local.getMaxBetFromFile(game, currency);
 //        double maxTotalBet = local.getMaxTotalBetFromFile(game, currency);
 //        double defaultTotalBet = maxTotalBet / maxBet * defaultBet;
 //        System.out.println("[" + game + "] " + "The sum of bets: " + (defaultTotalBet + defaultTotalBet));
-        System.out.println("[" + game + "] " + "The sum of bets: " + (totalBet + totalBet));
-        System.out.println("[" + game + "] " + "Final balance: " + endBalance);
+        System.out.println("[" + gameName + "] " + "The sum of bets: " + (totalBet + totalBet));
+        System.out.println("[" + gameName + "] " + "Final balance: " + endBalance);
 
         // Validation of balance
 //        Assert.assertEquals((startBalance - defaultTotalBet - defaultTotalBet), endBalance,
 //                "Balance isn't correct");
-        Assert.assertEquals(gameObject.round(startBalance - totalBet * 2, 2), endBalance,
+        Assert.assertEquals(game.round(startBalance - totalBet * 2, 2), endBalance,
                 "Balance isn't correct");
     }
 
