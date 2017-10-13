@@ -50,7 +50,7 @@ class Game {
                 js = "return c_playBtn.emit('click')";
                 break;
             case "mark4":
-                js = "return c_button.emit('click')";
+                js = "return c_playBtn.button.emit('click')";
                 break;
             default:
                 js = "return c_button.emit('click')";

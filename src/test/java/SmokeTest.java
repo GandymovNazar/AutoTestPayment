@@ -87,9 +87,8 @@ public class SmokeTest {
     public void testSpin(String gameName, String loseCheat, String mark) throws IOException, InterruptedException,
             FindFailed, UnirestException, AWTException {
 
-        String custId = "Dimons";
+        String custId = "SmokeTest";
         String currency = "USD";
-        String balance = "10";
 
         ServerMethods server = new ServerMethods();
 
@@ -98,7 +97,7 @@ public class SmokeTest {
 
         String token = server.getToken(Constants.ENVIRONMENT);
         server.createPlayer(custId, currency, token);
-        server.addBalance(custId, currency, balance, token);
+        server.addBalance(custId, currency,  String.valueOf(100 - Integer.parseInt(server.getUserBalance(custId))), token);
         String ticket = server.getTicket(custId);
         String linkForTheGame = server.getGameToken(gameName, token, ticket);
 
