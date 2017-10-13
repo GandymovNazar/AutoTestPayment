@@ -85,7 +85,7 @@ class Game {
                 js = "c_spinButton.emit('click')";
                 break;
             case  "mark4":
-                js = "c_spinButton.emit('click')";
+                js = "m_mainView.dispatcher.dispatch(\"BottomBarEvent.READY_TO_SPIN\");";
                 break;
             default:
                 js = "c_spinButton.emit('click')";
@@ -108,8 +108,16 @@ class Game {
 
     }
 
-    double getTotalBet() {
-       String js = "return c_totalbetLabel.text";
+    double getTotalBet(String mark) {
+        String js;
+        switch (mark){
+            case "mark4":
+                js = "return c_totalBet.valueLabel.text";
+                break;
+            default:
+                js = "return c_totalbetLabel.text";
+                break;
+        }
        Pattern p = Pattern.compile("\\d+.\\d+|\\d+");
        Object data = driver.executeScript(js);
        String d = (String) data;

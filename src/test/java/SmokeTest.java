@@ -111,7 +111,7 @@ public class SmokeTest {
 
         gameObject.sendCheat(loseCheat);
         gameObject.pause();
-        double totalBet = gameObject.getTotalBet();
+        double totalBet = gameObject.getTotalBet(mark);
         gameObject.pressSpin();
 //        Object data = driver.executeScript("return c_infoLabel.text");
 //        System.out.println(data);
