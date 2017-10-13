@@ -20,7 +20,7 @@ public class TestLimits {
     @DataProvider(name = "allGames")
     public Object[][] allGames() {
         return new Object[][]
-                {{"sw_9s1k"}, {"sw_888t"}, {"sw_al"}, {"sw_db"}, {"sw_dd"}, {"sw_dhcf"}, {"sw_dj"}, {"sw_fbb"},
+                {{"sw_9s1k"}, {"sw_888t"}, {"sw_al"},{"sw_cts"}, {"sw_db"}, {"sw_dd"}, {"sw_dhcf"}, {"sw_dj"}, {"sw_fbb"},
                         {"sw_fp"}, {"sw_ggdn"}, {"sw_gm"}, {"sw_gol"}, {"sw_h2h"}, {"sw_hp"}, {"sw_ld"}, {"sw_lodk"},
                         {"sw_mer"}, {"sw_mf"}, {"sw_mrmnky"}, {"sw_nyf"}, {"sw_omqjp"}, {"sw_pc"}, {"sw_qoiaf"}, {"sw_rf"},
                         {"sw_rm"}, {"sw_rs"}, {"sw_scyd"}, {"sw_sf"}, {"sw_sgcf"}, {"sw_slbs"}, {"sw_sod"}, {"sw_sq"},

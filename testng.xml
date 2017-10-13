@@ -9,10 +9,4 @@
         </classes>
     </test>
 
-    <test name="Test reels sets for all games">
-        <classes>
-            <class name="TestReelSets"/>
-        </classes>
-    </test>
-
 </suite>
