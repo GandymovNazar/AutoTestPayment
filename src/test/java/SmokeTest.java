@@ -87,22 +87,22 @@ public class SmokeTest {
     public void testSpin(String gameName, String loseCheat, String mark) throws IOException, InterruptedException,
             FindFailed, UnirestException, AWTException {
 
-        String custId = "SmokeTest";
+        String custId = "SergeTest";
         String currency = "USD";
 
         ServerMethods server = new ServerMethods();
 
 //        LocalMethods local = new LocalMethods();
 
+        Game game = new Game(driver, mark);
 
         String token = server.getToken(Constants.ENVIRONMENT);
         server.createPlayer(custId, currency, token);
-        server.addBalance(custId, currency,  String.valueOf(100 - Double.parseDouble(server.getUserBalance(custId))), token);
+        server.addBalance(custId, currency,  String.valueOf(game.round(100 - Double.parseDouble(server.getUserBalance(custId)), 2)), token);
         String ticket = server.getTicket(custId);
         String linkForTheGame = server.getGameToken(gameName, token, ticket);
 
         driver.get(linkForTheGame);
-        Game game = new Game(driver, mark);
 
         game.pressPlayGame();
 //        Double startBalance = Double.parseDouble(server.getUserBalance(custId));
