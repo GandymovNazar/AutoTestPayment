@@ -97,7 +97,7 @@ public class SmokeTest {
 
         String token = server.getToken(Constants.ENVIRONMENT);
         server.createPlayer(custId, currency, token);
-        server.addBalance(custId, currency,  String.valueOf(100 - Integer.parseInt(server.getUserBalance(custId))), token);
+        server.addBalance(custId, currency,  String.valueOf(100 - Double.parseDouble(server.getUserBalance(custId))), token);
         String ticket = server.getTicket(custId);
         String linkForTheGame = server.getGameToken(gameName, token, ticket);
 
