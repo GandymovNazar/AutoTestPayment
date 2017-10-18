@@ -105,7 +105,7 @@ class Game {
             pause();
             getBalanceFromUi();
         }
-        return -1;
+        return getBalanceFromUi();
     }
 
     double getTotalBet(String mark) {
