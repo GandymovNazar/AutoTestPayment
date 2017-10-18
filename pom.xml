@@ -70,14 +70,6 @@
             <artifactId>selenium-server</artifactId>
             <version>3.0.1</version>
         </dependency>
-
-        <!-- https://mvnrepository.com/artifact/com.sikulix/sikulixapi -->
-        <dependency>
-            <groupId>com.sikulix</groupId>
-            <artifactId>sikulixapi</artifactId>
-            <version>1.1.0</version>
-        </dependency>
-
     </dependencies>
 
 

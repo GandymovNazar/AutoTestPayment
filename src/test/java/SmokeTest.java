@@ -1,6 +1,5 @@
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.sikuli.script.FindFailed;
 import org.testng.Assert;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
@@ -12,7 +11,7 @@ import java.io.IOException;
 
 
 public class SmokeTest {
-    public static void main(String[] args) throws FindFailed, InterruptedException, IOException {
+    public static void main(String[] args) throws InterruptedException, IOException {
     }
 
     private ChromeDriver driver;
@@ -64,15 +63,15 @@ public class SmokeTest {
                 {"sw_sod", "1,3,5,7,9", "mark3"},
                 {"sw_mrmnky", "5,5,5,5,5", "mark3"},
                 {"sw_al", "10,10,10,10,10", "mark3"},
-                {"sw_rm", "0,0,0,0,0", "mark3"},
-                {"sw_qoiaf", "23,50,54,24,41", "mark3"},
-                {"sw_sq", "18,73,127,65,9", "mark3"},
-                {"sw_mer", "10,10,10,10,10", "mark3"},
-                {"sw_888t", "1,1,1,1,1", "mark3"},
-                {"sw_rs", "1,1,1,1,1", "mark3"},
-                {"sw_scyd", "1,1,1,1,1", "mark3"},
-                {"sw_ggdn", "1,1,1,1,1", "mark3"},
-                {"sw_ld", "10,10,10,10,10", "mark3"},
+                {"sw_rm", "0,0,0,0,0", "mark2"},
+                {"sw_qoiaf", "23,50,54,24,41", "mark2"},
+                {"sw_sq", "18,73,127,65,9", "mark2"},
+                {"sw_mer", "10,10,10,10,10", "mark2"},
+                {"sw_888t", "1,1,1,1,1", "mark2"},
+                {"sw_rs", "1,1,1,1,1", "mark2"},
+                {"sw_scyd", "1,1,1,1,1", "mark2"},
+                {"sw_ggdn", "1,1,1,1,1", "mark2"},
+                {"sw_ld", "10,10,10,10,10", "mark2"},
 
                 {"sw_fbb", "10,7,0,0,0", "mark4"},
                 {"sw_lodk", "1,1,1,1,1", "mark4"},
@@ -85,7 +84,7 @@ public class SmokeTest {
 
     @Test(dataProvider = "allGames")
     public void testSpin(String gameName, String loseCheat, String mark) throws IOException, InterruptedException,
-            FindFailed, UnirestException, AWTException {
+            UnirestException, AWTException {
 
         String custId = "SergeTest";
         String currency = "USD";

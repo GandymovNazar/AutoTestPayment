@@ -43,17 +43,13 @@ class Game {
         int timeout = 2000;
         String js;
         switch (mark) {
-            case "mark2":
-                js = "return c_button.emit('click')";
-                break;
             case "mark3":
                 js = "return c_playBtn.emit('click')";
                 break;
+            case "mark2":
             case "mark4":
-                js = "return c_button && c_button.worldVisible && c_button.emit('click')";
-                break;
             default:
-                js = "return c_button.emit('click')";
+                js = "return c_button && c_button.worldVisible && c_button.emit('click')";
                 break;
         }
         if (waited > maxWait){
@@ -61,14 +57,13 @@ class Game {
         }
         try {
             boolean test = (boolean) driver.executeScript(js);
-
             if (!test) {
                 Thread.sleep(timeout);
-                waited +=timeout;
+                waited += timeout;
                 pressPlayGame();
             }
         } catch (WebDriverException e) {
-            waited +=timeout;
+            waited += timeout;
 //            System.out.println(String.format("Waiting for \"Play game\" button for %s sec.", timeout));
             Thread.sleep(timeout);
             pressPlayGame();
@@ -96,16 +91,21 @@ class Game {
 
 
     double getBalanceFromUi() {
-        String balanceFromUi = driver.findElement(By.className("footer-balance-value")).getText()
-//                .replace(".", "")
-                .replace(",", "");
-        Pattern p = Pattern.compile("\\d+\\.\\d+");
-        Matcher m = p.matcher(balanceFromUi);
-        if (m.find()) {
-            balanceFromUi = m.group(0);
+        try {
+            String balanceFromUi = driver.findElement(By.className("footer-balance-value")).getText()
+                    .replace(",", "");
+            Pattern p = Pattern.compile("\\d+\\.\\d+");
+            Matcher m = p.matcher(balanceFromUi);
+            if (m.find()) {
+                balanceFromUi = m.group(0);
+            }
+            return Double.parseDouble(balanceFromUi);
+        } catch (NumberFormatException e) {
+            System.out.println("Can't get balance. Trying again.");
+            pause();
+            getBalanceFromUi();
         }
-        return Double.parseDouble(balanceFromUi);
-
+        return -1;
     }
 
     double getTotalBet(String mark) {
