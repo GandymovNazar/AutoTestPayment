@@ -10,6 +10,7 @@
     <properties>
         <jre.level>1.8</jre.level>
         <jdk.level>1.8</jdk.level>
+        <suiteXmlFile>limits.xml</suiteXmlFile>
     </properties>
 
     <build>
@@ -29,7 +30,7 @@
                 <version>2.20.1</version>
                 <configuration>
                     <suiteXmlFiles>
-                        <suiteXmlFile>testng.xml</suiteXmlFile>
+                        <suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
                     </suiteXmlFiles>
                 </configuration>
             </plugin>
