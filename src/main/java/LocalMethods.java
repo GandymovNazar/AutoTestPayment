@@ -50,4 +50,10 @@ class LocalMethods {
         JSONObject curr_groups = new JsonNode(file).getObject();
         return curr_groups.keySet();
     }
+
+    double getCoinRate(String game, String currency) throws IOException {
+        JSONObject currencySettings = getCurrencySettingsFromFile(game, currency);
+        return Double.parseDouble(currencySettings.get("coinsRate").toString());
+
+    }
 }

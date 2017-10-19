@@ -305,4 +305,15 @@ class ServerMethods {
         }
         return true;
     }
+
+    double getCoinRate(String game, String currency){
+        for (int i = 0; i < allGamesFromServer.length(); i++) {
+            if (Objects.equals(allGamesFromServer.getJSONObject(i).get("code"), game)) {
+                JSONObject limits = (JSONObject) allGamesFromServer.getJSONObject(i).get("limits");
+                JSONObject currencyLimits = (JSONObject) limits.get(currency);
+                return Double.parseDouble(currencyLimits.get("coinsRate").toString());
+            }
+        }
+        return -1;
+    }
 }
