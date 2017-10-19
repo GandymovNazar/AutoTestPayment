@@ -17,7 +17,7 @@ public class TestCoinsRates {
 
     @DataProvider(name = "allGames")
     public Object[][] allGames() {
-        return new Object[][]{{"sw_fufish-jp"}};
+        return new Object[][]{{"sw_fufish-jp"}, {"sw_fufish_intw"}};
     }
 
     @Test(dataProvider = "allGames")
