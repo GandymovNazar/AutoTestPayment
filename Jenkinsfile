@@ -17,7 +17,7 @@ pipeline {
             steps {
                 sh 'docker pull maven:${MAVEN}'
                 withDockerContainer(image: "maven:${MAVEN}", toolName: 'latest') {
-                    sh "mvn install -Denv=${env.ENV} -DsuiteXmlFile=smoke.xml"
+                    sh "mvn install -Denv=${env.ENV}"
                 }
             }
         }
