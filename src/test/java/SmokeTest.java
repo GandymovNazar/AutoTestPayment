@@ -29,7 +29,7 @@ public class SmokeTest {
                 CHROME_DRIVER = "drivers/chromedriver";
                 break;
             case "linux":
-                CHROME_DRIVER = "drivers/chromedriver_linux64";
+                CHROME_DRIVER = "drivers/chromedriver_linux32";
                 break;
             default:
                 CHROME_DRIVER = "drivers\\chromedriver.exe";
