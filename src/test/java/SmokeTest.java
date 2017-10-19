@@ -28,6 +28,9 @@ public class SmokeTest {
             case "mac os x":
                 CHROME_DRIVER = "drivers/chromedriver";
                 break;
+            case "linux":
+                CHROME_DRIVER = "drivers/chromedriver_linux64";
+                break;
             default:
                 CHROME_DRIVER = "drivers\\chromedriver.exe";
                 break;
@@ -98,7 +101,7 @@ public class SmokeTest {
 
         String token = server.getToken(Constants.ENVIRONMENT);
         server.createPlayer(custId, currency, token);
-        server.addBalance(custId, currency,  String.valueOf(game.round(100 - Double.parseDouble(server.getUserBalance(custId)), 2)), token);
+        server.addBalance(custId, currency, String.valueOf(game.round(100 - Double.parseDouble(server.getUserBalance(custId)), 2)), token);
         String ticket = server.getTicket(custId);
         String linkForTheGame = server.getGameToken(gameName, token, ticket);
 
@@ -142,7 +145,7 @@ public class SmokeTest {
     }
 
     @AfterSuite
-    public void closeDriver(){
+    public void closeDriver() {
         driver.close();
     }
 
