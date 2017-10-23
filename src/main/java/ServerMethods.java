@@ -202,7 +202,7 @@ class ServerMethods {
 
     JSONObject getLimitsFromServer(String gameName, String currency) throws UnirestException {
         for (int i = 0; i < allGamesFromServer.length(); i++) {
-            if (Objects.equals(allGamesFromServer.getJSONObject(i).get("code"), gameName)) {
+            if (Objects.equals(allGamesFromServer.getJSONObject(i).get("code"), gameName.replace(".json", ""))) {
                 JSONObject limits = (JSONObject) allGamesFromServer.getJSONObject(i).get("limits");
                 return (JSONObject) limits.get(currency);
             }
@@ -232,7 +232,7 @@ class ServerMethods {
 
     double getDefaultBetFromServer(String gameName, String currency) throws UnirestException {
         for (int i = 0; i < allGamesFromServer.length(); i++) {
-            if (Objects.equals(allGamesFromServer.getJSONObject(i).get("code"), gameName)) {
+            if (Objects.equals(allGamesFromServer.getJSONObject(i).get("code"), gameName.replace(".json", ""))) {
                 JSONObject limits = (JSONObject) allGamesFromServer.getJSONObject(i).get("limits");
                 JSONObject currencyLimits = (JSONObject) limits.get(currency);
                 return Double.parseDouble(currencyLimits.get("stakeDef").toString());
@@ -252,7 +252,7 @@ class ServerMethods {
 
     double getMinBetFromServer(String gameName, String currency) throws UnirestException {
         for (int i = 0; i < allGamesFromServer.length(); i++) {
-            if (Objects.equals(allGamesFromServer.getJSONObject(i).get("code"), gameName)) {
+            if (Objects.equals(allGamesFromServer.getJSONObject(i).get("code"), gameName.replace(".json", ""))) {
                 JSONObject limits = (JSONObject) allGamesFromServer.getJSONObject(i).get("limits");
                 JSONObject currencyLimits = (JSONObject) limits.get(currency);
                 return Double.parseDouble(currencyLimits.get("stakeMin").toString());
@@ -263,7 +263,7 @@ class ServerMethods {
 
     double getMaxBetFromServer(String gameName, String currency) throws UnirestException {
         for (int i = 0; i < allGamesFromServer.length(); i++) {
-            if (Objects.equals(allGamesFromServer.getJSONObject(i).get("code"), gameName)) {
+            if (Objects.equals(allGamesFromServer.getJSONObject(i).get("code"), gameName.replace(".json", ""))) {
                 JSONObject limits = (JSONObject) allGamesFromServer.getJSONObject(i).get("limits");
                 JSONObject currencyLimits = (JSONObject) limits.get(currency);
                 return Double.parseDouble(currencyLimits.get("stakeMax").toString());
@@ -274,7 +274,7 @@ class ServerMethods {
 
     long getMaxTotalBetFromServer(String game, String currency) {
         for (int i = 0; i < allGamesFromServer.length(); i++) {
-            if (Objects.equals(allGamesFromServer.getJSONObject(i).get("code"), game)) {
+            if (Objects.equals(allGamesFromServer.getJSONObject(i).get("code"), game.replace(".json", ""))) {
                 JSONObject limits = (JSONObject) allGamesFromServer.getJSONObject(i).get("limits");
                 JSONObject currencyLimits = (JSONObject) limits.get(currency);
                 return Long.parseLong(currencyLimits.get("maxTotalStake").toString());
@@ -294,7 +294,7 @@ class ServerMethods {
 
     boolean isCurrencyPresentForGameInServer(String game, String currency) {
         for (int i = 0; i < allGamesFromServer.length(); i++) {
-            if (Objects.equals(allGamesFromServer.getJSONObject(i).get("code"), game)) {
+            if (Objects.equals(allGamesFromServer.getJSONObject(i).get("code"), game.replace(".json", ""))) {
                 JSONObject limits = (JSONObject) allGamesFromServer.getJSONObject(i).get("limits");
                 try {
                     limits.get(currency);
@@ -308,7 +308,7 @@ class ServerMethods {
 
     double getCoinRate(String game, String currency){
         for (int i = 0; i < allGamesFromServer.length(); i++) {
-            if (Objects.equals(allGamesFromServer.getJSONObject(i).get("code"), game)) {
+            if (Objects.equals(allGamesFromServer.getJSONObject(i).get("code"), game.replace(".json", ""))) {
                 JSONObject limits = (JSONObject) allGamesFromServer.getJSONObject(i).get("limits");
                 JSONObject currencyLimits = (JSONObject) limits.get(currency);
                 return Double.parseDouble(currencyLimits.get("coinsRate").toString());
