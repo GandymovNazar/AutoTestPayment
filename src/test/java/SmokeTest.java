@@ -83,8 +83,8 @@ public class SmokeTest {
                 {"sw_lodk", "1,1,1,1,1", "mark4"},
                 {"sw_hp", "10,10,10,10,10", "mark4"},
                 {"sw_h2h", "10,10,10,10,10", "mark4"},
-                {"sw_9s1k", "10,10,10,10,10", "mark4"},
-                {"sw_cts", "10,10,10,10,10", "mark4"}
+                {"sw_9s1k", "10,10,10,10,10", "mark4"}
+//                {"sw_cts", "10,10,10,10,10", "mark4"}
         };
     }
 
@@ -92,7 +92,7 @@ public class SmokeTest {
     public void testSpin(String gameName, String loseCheat, String mark) throws IOException, InterruptedException,
             UnirestException, AWTException {
 
-        String custId = "SergeTest";
+        String custId = "SergeTest1";
         String currency = "USD";
 
         ServerMethods server = new ServerMethods();
