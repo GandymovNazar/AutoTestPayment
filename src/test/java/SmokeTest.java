@@ -1,5 +1,6 @@
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
@@ -36,8 +37,9 @@ public class SmokeTest {
                 break;
         }
         System.setProperty("webdriver.chrome.driver", CHROME_DRIVER);
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--start-maximized");
+        driver = new ChromeDriver(options);
 
     }
 
