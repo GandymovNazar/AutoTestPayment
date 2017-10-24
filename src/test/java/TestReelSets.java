@@ -1,6 +1,7 @@
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.testng.Assert;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -16,6 +17,11 @@ public class TestReelSets {
     @DataProvider(name = "allGames")
     public Object[][] allGames() {
         return LocalMethods.getAllGames("reelSets");
+    }
+
+    @BeforeSuite
+    public void printDetails(){
+        System.out.println("Checking on " + Constants.ENVIRONMENT);
     }
 
 
