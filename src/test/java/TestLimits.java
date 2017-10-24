@@ -1,6 +1,7 @@
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.json.JSONArray;
 import org.testng.Assert;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -184,6 +185,11 @@ public class TestLimits {
         } else {
             System.out.println(game + " " + testName + " PASSED");
         }
+    }
+
+    @AfterSuite
+    public void printPathToReport(){
+        System.out.println("Test report you can find there: http://10.37.18.73:8000/");
     }
 
 }

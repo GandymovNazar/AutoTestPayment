@@ -147,6 +147,7 @@ public class SmokeTest {
     @AfterSuite
     public void closeDriver() {
         driver.close();
+        System.out.println("Test report you can find there: http://10.37.18.73:8000/");
     }
 
 }

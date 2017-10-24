@@ -1,6 +1,7 @@
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.testng.Assert;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -69,5 +70,10 @@ public class TestReelSets {
         } else {
             System.out.println(testName + " PASSED");
         }
+    }
+
+    @AfterSuite
+    public void printPathToReport(){
+        System.out.println("Test report you can find there: http://10.37.18.73:8000/");
     }
 }
