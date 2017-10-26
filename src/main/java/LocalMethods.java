@@ -86,6 +86,6 @@ class LocalMethods {
             objArray[i][0] = listOfFiles[i].getName();
         }
 
-        return objArray;
+        return Constants.GAME == null ? objArray : new Object[][]{{Constants.GAME + ".json"}};
     }
 }
