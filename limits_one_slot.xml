@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Skywind">
+
+    <test name="Test bet limits for all games">
+        <classes>
+            <class name="TestCoinsRates"/>
+            <class name="TestLimits"/>
+        </classes>
+    </test>
+
+</suite>
