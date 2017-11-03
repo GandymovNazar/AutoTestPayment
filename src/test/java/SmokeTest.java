@@ -110,7 +110,7 @@ public class SmokeTest {
 
         driver.get(linkForTheGame);
 
-        game.pressPlayGame();
+        game.pressPlayGame(gameName);
 //        Double startBalance = Double.parseDouble(server.getUserBalance(custId));
         double startBalance = game.getBalanceFromUi();
 

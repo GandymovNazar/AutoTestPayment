@@ -38,7 +38,7 @@ class Game {
 
     }
 
-    void pressPlayGame() throws InterruptedException {
+    void pressPlayGame(String game) throws InterruptedException {
         int maxWait = 60 * 1000;
         int timeout = 2000;
         String js;
@@ -53,20 +53,20 @@ class Game {
                 break;
         }
         if (waited > maxWait){
-            throw new AssertionError("Can't find button Play game. Waited " + maxWait / 1000 + " sec.");
+            throw new AssertionError(game +" Can't find button Play game. Waited " + maxWait / 1000 + " sec.");
         }
         try {
             boolean test = (boolean) driver.executeScript(js);
             if (!test) {
                 Thread.sleep(timeout);
                 waited += timeout;
-                pressPlayGame();
+                pressPlayGame(game);
             }
         } catch (WebDriverException e) {
             waited += timeout;
 //            System.out.println(String.format("Waiting for \"Play game\" button for %s sec.", timeout));
             Thread.sleep(timeout);
-            pressPlayGame();
+            pressPlayGame(game);
         }
     }
 
