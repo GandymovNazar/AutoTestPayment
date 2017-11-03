@@ -93,7 +93,7 @@ public class SmokeTest {
     public void testSpin(String gameName, String loseCheat, String mark) throws IOException, InterruptedException,
             UnirestException, AWTException {
 
-        String custId = "SergeTest1";
+        String custId = "SergeTest2";
         String currency = "USD";
 
         ServerMethods server = new ServerMethods();
