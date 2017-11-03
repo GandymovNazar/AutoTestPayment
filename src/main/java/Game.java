@@ -39,7 +39,7 @@ class Game {
     }
 
     void pressPlayGame(String game) throws InterruptedException {
-        int maxWait = 60 * 1000;
+        int maxWait = 90 * 1000;
         int timeout = 2000;
         String js;
         switch (mark) {
