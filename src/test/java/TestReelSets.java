@@ -28,6 +28,7 @@ public class TestReelSets {
 
     @Test(dataProvider = "allGames")
     public void testReels(String gameName) throws IOException {
+        gameName = gameName.replace(".json", "");
         System.out.println("\nChecking game: " + gameName);
         File pathForAllSets = new File(Constants.resources + "/reelSets/" + gameName);
         File[] sets = pathForAllSets.listFiles();
