@@ -78,6 +78,7 @@ public class SmokeTest {
                 {"sw_scyd", "1,1,1,1,1", "mark2"},
                 {"sw_ggdn", "1,1,1,1,1", "mark2"},
                 {"sw_ld", "10,10,10,10,10", "mark2"},
+                {"sw_mt", "4,4,4,4,4", "mark2"},
 
                 {"sw_fbb", "10,7,0,0,0", "mark4"},
                 {"sw_lodk", "1,1,1,1,1", "mark4"},
