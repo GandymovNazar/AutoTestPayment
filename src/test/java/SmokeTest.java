@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 
 import java.awt.*;
 import java.io.IOException;
+import java.util.Random;
 
 
 public class SmokeTest {
@@ -16,6 +17,7 @@ public class SmokeTest {
     }
 
     private ChromeDriver driver;
+    private int randomNumber = new Random().nextInt(1000);
 
     @BeforeClass
     public void settings() {
@@ -40,7 +42,6 @@ public class SmokeTest {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--start-maximized");
         driver = new ChromeDriver(options);
-
     }
 
     @DataProvider(name = "allGames")
@@ -94,7 +95,7 @@ public class SmokeTest {
     public void testSpin(String gameName, String loseCheat, String mark) throws IOException, InterruptedException,
             UnirestException, AWTException {
 
-        String custId = "SergeTest2";
+        String custId = "SmokeTest" +  randomNumber;
         String currency = "USD";
 
         ServerMethods server = new ServerMethods();
