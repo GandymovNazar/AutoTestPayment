@@ -11,16 +11,9 @@ import java.util.Set;
 class LocalMethods {
 
     private String path_slots_limits = Constants.resources + "/limits_slots/";
-    private String path_arcades_limits = Constants.resources + "/limits_arcades/";
-
+    
     private JSONObject getCurrencySettingsFromFile(String game, String currency) throws IOException {
         String file = new String(Files.readAllBytes(Paths.get(path_slots_limits + game)));
-        JsonNode curr_groups = new JsonNode(file);
-        return (JSONObject) curr_groups.getObject().get(currency);
-    }
-
-    private JSONObject getCurrencySettingsFromFileForArcades(String game, String currency) throws IOException {
-        String file = new String(Files.readAllBytes(Paths.get(path_arcades_limits + game)));
         JsonNode curr_groups = new JsonNode(file);
         return (JSONObject) curr_groups.getObject().get(currency);
     }
@@ -61,17 +54,6 @@ class LocalMethods {
         return curr_groups.keySet();
     }
 
-    Set<String> getAllCurrenciesArcades(String game) throws IOException {
-        String file = new String(Files.readAllBytes(Paths.get(path_arcades_limits + game)));
-        JSONObject curr_groups = new JsonNode(file).getObject();
-        return curr_groups.keySet();
-    }
-
-    double getCoinRate(String game, String currency) throws IOException {
-        JSONObject currencySettings = getCurrencySettingsFromFileForArcades(game, currency);
-        return Double.parseDouble(currencySettings.get("coinsRate").toString());
-
-    }
 
     static Object[][] getAllGames(String path) {
 

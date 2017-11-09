@@ -22,7 +22,7 @@ public class TestCoinsRates {
 
     @Test(dataProvider = "allGames")
     public void checkIfCurrencyIsPresentOnServer(String game) throws IOException, UnirestException {
-        Set<String> allCurrencies = local.getAllCurrenciesArcades(game);
+        Set<String> allCurrencies = local.getAllCurrencies(game);
         StringBuilder errors = new StringBuilder("\n");
         for (String currency : allCurrencies) {
             if (!server.isCurrencyPresentForGameInServer(game, currency)) {
@@ -41,7 +41,7 @@ public class TestCoinsRates {
 
     @Test(dataProvider = "allGames")
     public void testCoinsRates(String game) throws IOException {
-        Set<String> allCurrencies = local.getAllCurrenciesArcades(game);
+        Set<String> allCurrencies = local.getAllCurrencies(game);
         StringBuilder errors = new StringBuilder("\n");
         for (String currency : allCurrencies){
             if (server.isCurrencyPresentForGameInServer(game, currency)) {

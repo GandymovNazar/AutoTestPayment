@@ -1,0 +1,188 @@
+{
+  "EUR": {
+    "coinsRate": 0.01
+  },
+  "USD": {
+    "coinsRate": 0.01
+  },
+  "GBP": {
+    "coinsRate": 0.01
+  },
+  "AUD": {
+    "coinsRate": 0.01
+  },
+  "AZN": {
+    "coinsRate": 0.01
+  },
+  "BGN": {
+    "coinsRate": 0.01
+  },
+  "BND": {
+    "coinsRate": 0.01
+  },
+  "CAD": {
+    "coinsRate": 0.01
+  },
+  "CHF": {
+    "coinsRate": 0.01
+  },
+  "GEL": {
+    "coinsRate": 0.01
+  },
+  "NZD": {
+    "coinsRate": 0.01
+  },
+  "SGD": {
+    "coinsRate": 0.01
+  },
+  "BRL": {
+    "coinsRate": 0.05
+  },
+  "ILS": {
+    "coinsRate": 0.05
+  },
+  "MYR": {
+    "coinsRate": 0.05
+  },
+  "PEN": {
+    "coinsRate": 0.05
+  },
+  "PLN": {
+    "coinsRate": 0.05
+  },
+  "RON": {
+    "coinsRate": 0.05
+  },
+  "TRY": {
+    "coinsRate": 0.05
+  },
+  "ARS": {
+    "coinsRate": 0.1
+  },
+  "CNY": {
+    "coinsRate": 0.1
+  },
+  "DKK": {
+    "coinsRate": 0.1
+  },
+  "HKD": {
+    "coinsRate": 0.1
+  },
+  "HRK": {
+    "coinsRate": 0.1
+  },
+  "MAD": {
+    "coinsRate": 0.1
+  },
+  "MOP": {
+    "coinsRate": 0.1
+  },
+  "NOK": {
+    "coinsRate": 0.1
+  },
+  "SEK": {
+    "coinsRate": 0.1
+  },
+  "VEF": {
+    "coinsRate": 0.1
+  },
+  "ZAR": {
+    "coinsRate": 0.1
+  },
+  "ZMW": {
+    "coinsRate": 0.1
+  },
+  "CZK": {
+    "coinsRate": 0.5
+  },
+  "DOP": {
+    "coinsRate": 0.5
+  },
+  "HNL": {
+    "coinsRate": 0.5
+  },
+  "INR": {
+    "coinsRate": 0.5
+  },
+  "KGS": {
+    "coinsRate": 0.5
+  },
+  "MDL": {
+    "coinsRate": 0.5
+  },
+  "MXN": {
+    "coinsRate": 0.5
+  },
+  "NIO": {
+    "coinsRate": 0.5
+  },
+  "PHP": {
+    "coinsRate": 0.5
+  },
+  "RUB": {
+    "coinsRate": 0.5
+  },
+  "THB": {
+    "coinsRate": 0.5
+  },
+  "TWD": {
+    "coinsRate": 0.5
+  },
+  "UAH": {
+    "coinsRate": 0.5
+  },
+  "UYU": {
+    "coinsRate": 0.5
+  },
+  "ISK": {
+    "coinsRate": 1
+  },
+  "JPY": {
+    "coinsRate": 1
+  },
+  "RSD": {
+    "coinsRate": 1
+  },
+  "CLP": {
+    "coinsRate": 5
+  },
+  "HUF": {
+    "coinsRate": 5
+  },
+  "KZT": {
+    "coinsRate": 5
+  },
+  "XOF": {
+    "coinsRate": 5
+  },
+  "KRW": {
+    "coinsRate": 10
+  },
+  "COP": {
+    "coinsRate": 10
+  },
+  "MNT": {
+    "coinsRate": 10
+  },
+  "TZS": {
+    "coinsRate": 10
+  },
+  "MMK": {
+    "coinsRate": 10
+  },
+  "PYG": {
+    "coinsRate": 50
+  },
+  "IDR": {
+    "coinsRate": 100
+  },
+  "VND": {
+    "coinsRate": 250
+  },
+  "IDS": {
+    "coinsRate": 0.1
+  },
+  "VNS": {
+    "coinsRate": 0.25
+  }
+}
